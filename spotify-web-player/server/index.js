@@ -1,6 +1,8 @@
 const express = require('express')
 const request = require('request');
 const dotenv = require('dotenv');
+const fs = require("fs").promises;
+
 
 const port = 5000
 
@@ -77,3 +79,21 @@ app.listen(port, () => {
 })
 
 //app.use(express.static(path.join(__dirname, '../build')));
+
+// TODO fetch songs from ultimate guitar
+app.get('/gettabs', async (req, res) => {
+  let artist = req.query.artist;
+  let name = req.query.name;
+
+  console.log("Fetching tabs for ", artist, name);
+  
+  // fetch the songs
+  // FIXME: returns tabs for songs, currently returns test data
+  let data = await (await fs.readFile("./server/test.html")).toString("utf-8");
+
+  console.log(data);
+  /////////////////////////////////////////////////////////////
+  
+
+  res.json({"tabs":[data]});
+})
