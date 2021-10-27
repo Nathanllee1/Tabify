@@ -45,7 +45,7 @@ function Login() {
   return (
     <div className={classes.login}>
       <h1>Tabify</h1>
-      <a href="#">
+      <a href="/auth/login">
         <img src="/Spotify_Icon_RGB_White.png" />
         LOGIN WITH SPOTIFY
       </a>
