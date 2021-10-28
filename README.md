@@ -36,3 +36,36 @@ I’m not sure how heavily we need to rely on a database? I had this in mind to 
 I think there’s not much point in storing the actual tabs in the database.
 
 UI Prototype: https://www.figma.com/file/J7pzVQTY6Wv1YScIYKMDGf/Login-Page?node-id=0%3A1
+
+## Style Check
+
+For this project we're using Prettier as a style checker to ensure our code styles are consistent. To install using npm, you can run the followming commands in the root directory:
+
+```npm install --save-dev --save-exact prettier```
+
+To let the editor know you're using Prettier:
+
+```echo {}> .prettierrc.json```
+
+Create a ```.prettierignore``` file to let the editor know which files NOT to style check.
+
+Add these lines in .prettierignore
+
+```
+# Ignore artifacts:
+build
+coverage
+```
+
+To format all files, run
+
+```npx prettier --write . ```
+
+Further instructions for installation can be found here: 
+https://prettier.io/docs/en/install.html
+
+Style rules here: 
+https://prettier.io/docs/en/options.html
+
+We recommend integrating Prettier into your chosen code editor (we recommend VSCode). Instructions on how to do so can be found here:
+https://prettier.io/docs/en/editors.html
