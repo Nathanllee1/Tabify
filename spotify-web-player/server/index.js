@@ -98,5 +98,5 @@ app.get("/gettabs", async (req, res) => {
   console.log(data);
   /////////////////////////////////////////////////////////////
 
-  res.json({ tabs: [data] });
+  res.send({ tabs: [data] });
 });

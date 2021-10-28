@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Tab from './tab/tab.js';
 
 const track = {
   name: "",
@@ -61,6 +62,7 @@ function WebPlayback(props) {
     return (
       <>
         <div className="container">
+        <Tab />
           <div className="main-wrapper">
             <b>
               {" "}
