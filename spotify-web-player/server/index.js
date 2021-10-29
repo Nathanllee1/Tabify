@@ -85,8 +85,8 @@ app.listen(port, () => {
 //app.use(express.static(path.join(__dirname, '../build')));
 
 // TODO fetch songs from ultimate guitar
-app.get("/gettabs", async (req, res) => {
-  let artist = req.query.artist;
+app.get("/api/gettabs", async (req, res) => {
+  let artist = req.query.topArtist;
   let name = req.query.name;
 
   console.log("Fetching tabs for ", artist, name);
@@ -95,7 +95,7 @@ app.get("/gettabs", async (req, res) => {
   // FIXME: returns tabs for songs, currently returns test data
   let data = await (await fs.readFile("./server/test.html")).toString("utf-8");
 
-  console.log(data);
+  //console.log(data);
   /////////////////////////////////////////////////////////////
 
   res.json({ tabs: [data] });
