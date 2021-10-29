@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Tab from './tab/tab.js';
 
+import { makeStyles } from "@material-ui/core/styles";
+import { mergeClasses, StylesContext } from "@material-ui/styles";
+
+
+const useStyles = makeStyles({
+  "cover": {
+  },
+  "container": {
+    display: "flex",
+    justifyContent: "center",
+    gap: "10%"
+  }
+})
+
 const track = {
   name: "",
   album: {
@@ -14,6 +28,19 @@ function WebPlayback(props) {
   const [is_active, setActive] = useState(false);
   const [player, setPlayer] = useState(undefined);
   const [current_track, setTrack] = useState(track);
+
+  const [history, add_history] = useState([])
+
+  const classes = useStyles();
+
+  useEffect(() => {
+    
+    console.log(history[history.length - 1] === current_track.name)
+    if (history[history.length - 1] !== current_track.name) {
+      console.log("switched to ", current_track);
+      add_history([...history, current_track]);
+    }
+  }, [current_track])
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -45,8 +72,9 @@ function WebPlayback(props) {
         if (!state) {
           return;
         }
-
-        setTrack(state.track_window.current_track);
+        
+        setTrack(state.track_window.current_track);      
+        
         setPaused(state.paused);
 
         player.getCurrentState().then((state) => {
@@ -75,11 +103,11 @@ function WebPlayback(props) {
     console.log(current_track.artists)
     return (
       <>
-        <div className="container">
+        <div className={classes.container}>
           <div className="main-wrapper">
             <img
               src={current_track.album.images[0].url}
-              className="now-playing__cover"
+              className={classes.cover}
               alt=""
             />
             <div className="now-playing__side">
@@ -115,8 +143,9 @@ function WebPlayback(props) {
                 &gt;&gt;
               </button>
             </div>
-            <Tab track={current_track}/>
+            
           </div>
+          <Tab track={current_track}/>
         </div>
       </>
     );
