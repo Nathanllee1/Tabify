@@ -100,6 +100,7 @@ function WebPlayback(props) {
       </>
     );
   } else {
+    console.log("artists");
     console.log(current_track.artists)
     return (
       <>
