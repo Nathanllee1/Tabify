@@ -9,8 +9,8 @@ const useStyles = makeStyles({
     verticalAlign: "center",
     placeItems: "center",
     alignContent: "center",
-    height: "100vh",
     backgroundColor: "white",
+    
 
     "& a": {
       padding: "20px",
@@ -25,6 +25,8 @@ const useStyles = makeStyles({
       backgroundColor: " white",
       borderColor: "#1dd760",
       color: "#1db954",
+      borderWidth: "1px",
+      borderStyle: "solid"
     },
 
     "& img": {
