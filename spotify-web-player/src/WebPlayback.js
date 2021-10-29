@@ -62,7 +62,6 @@ function WebPlayback(props) {
     return (
       <>
         <div className="container">
-        <Tab />
           <div className="main-wrapper">
             <b>
               {" "}
@@ -73,6 +72,7 @@ function WebPlayback(props) {
       </>
     );
   } else {
+    console.log(current_track.artists)
     return (
       <>
         <div className="container">
@@ -82,7 +82,6 @@ function WebPlayback(props) {
               className="now-playing__cover"
               alt=""
             />
-
             <div className="now-playing__side">
               <div className="now-playing__name">{current_track.name}</div>
               <div className="now-playing__artist">
@@ -116,6 +115,7 @@ function WebPlayback(props) {
                 &gt;&gt;
               </button>
             </div>
+            <Tab track={current_track}/>
           </div>
         </div>
       </>

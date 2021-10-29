@@ -5,18 +5,19 @@ import DOMPurify from "dompurify";
 function Tab() { 
 
    const track = {
-      name: "Song1",
+      name: "Gone",
       album: {
         images: [{ url: "" }],
       },
-      artists: [{ name: "" }],
+      artists: [{ name: "Kanye West" }],
     };
+
+    /* const { track } = props; */
 
    const [currentTrack, setCurrentTrack] = useState(null);
    const [tabHTML, setTabHTML] = useState('');
 
    function cleanHTML(rawHTML) {
-    
       const html = DOMPurify.sanitize(rawHTML, {
          USE_PROFILES: { html: true },
        })
@@ -25,12 +26,13 @@ function Tab() {
 
   useEffect(() => {
     async function getTab() {
-      const response = await fetch("/api/gettabs");
+      const response = await fetch(`/api/gettabs?name=${track.name}&artists=${track.artists[0].name}`);
       const json = await response.json();
       cleanHTML(json.tabs[0]);
       console.log(tabHTML)
     }
     getTab();
+    setCurrentTrack(track);
   }, []);
 
     return (
