@@ -15,21 +15,23 @@ function Tab() {
    const [currentTrack, setCurrentTrack] = useState(null);
    const [tabHTML, setTabHTML] = useState('');
 
- 
-
    function cleanHTML(rawHTML) {
-      console.log("cleaning")
+    
       const html = DOMPurify.sanitize(rawHTML, {
          USE_PROFILES: { html: true },
        })
-      setTabHTML(html);
+       setTabHTML(html);
    }
 
-   useEffect(() => {
-      fetch("/gettabs")
-      .then(res => res.text())
-      .then(rawHTML => cleanHTML(rawHTML))
-    }, []);
+  useEffect(() => {
+    async function getTab() {
+      const response = await fetch("/api/gettabs");
+      const json = await response.json();
+      cleanHTML(json.tabs[0]);
+      console.log(tabHTML)
+    }
+    getTab();
+  }, []);
 
     return (
        <div>

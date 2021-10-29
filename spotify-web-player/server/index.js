@@ -85,7 +85,7 @@ app.listen(port, () => {
 //app.use(express.static(path.join(__dirname, '../build')));
 
 // TODO fetch songs from ultimate guitar
-app.get("/gettabs", async (req, res) => {
+app.get("/api/gettabs", async (req, res) => {
   let artist = req.query.artist;
   let name = req.query.name;
 
@@ -98,5 +98,5 @@ app.get("/gettabs", async (req, res) => {
   console.log(data);
   /////////////////////////////////////////////////////////////
 
-  res.send({ tabs: [data] });
+  res.json({ tabs: [data] });
 });
