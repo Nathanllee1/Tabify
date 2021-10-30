@@ -11,7 +11,13 @@ const useStyles = makeStyles({
   "container": {
     display: "flex",
     justifyContent: "center",
-    gap: "10%"
+    gap: "10%",
+    flexWrap: "wrap"
+  },
+  "controls": {
+    display: "fixed"
+  },
+  "song_title": {
   }
 })
 
@@ -105,18 +111,19 @@ function WebPlayback(props) {
     return (
       <>
         <div className={classes.container}>
-          <div className="main-wrapper">
+          <div className={classes.controls}>
             <img
               src={current_track.album.images[0].url}
               className={classes.cover}
               alt=""
             />
             <div className="now-playing__side">
-              <div className="now-playing__name">{current_track.name}</div>
-              <div className="now-playing__artist">
+            <br/>
+              <h2 className={classes.song_title}>{current_track.name}</h2>
+              <h3 className="now-playing__artist">
                 {current_track.artists[0].name}
-              </div>
-
+              </h3>
+              <br/>
               <button
                 className="btn-spotify"
                 onClick={() => {

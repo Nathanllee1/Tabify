@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.OrSDI {
+  background-color: rgba(223, 223, 223, 0.753);
+  padding: 2px;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
