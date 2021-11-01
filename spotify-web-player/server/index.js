@@ -2,6 +2,7 @@ const express = require("express");
 const request = require("request");
 const dotenv = require("dotenv");
 const fs = require("fs").promises;
+const path = require("path")
 
 const port = 5000;
 
@@ -82,7 +83,7 @@ app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
 });
 
-//app.use(express.static(path.join(__dirname, '../build')));
+app.use(express.static(path.join(__dirname, '../build')));
 
 // TODO fetch songs from ultimate guitar
 app.get("/api/gettabs", async (req, res) => {
