@@ -10,11 +10,14 @@ const useStyles = makeStyles({
     display: "flex",
     margin: "2%",
     alignItems: "center",
-    gap: "5px"
+    gap: "5px",
+    height: "15%"
   },
   "app_container" : {
     textAlign:"center",
-    marginTop: "2%"
+    marginTop: "2%",
+    height: "75%",
+    display: "block"
   }
 })
 

@@ -12,10 +12,20 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
     gap: "10%",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+
   },
   "controls": {
-    display: "fixed"
+    marginTop: "1em",
+    boxShadow: "0px 4px 4px 0px #00000040",
+    padding: "30px",
+    height: "min-content;",
+    borderRadius: "15px",
+    position: "sticky",
+    alignSelf: "flex-start",
+    top: "10%",
+    width: "20%"
+
   },
   "song_title": {
   }
