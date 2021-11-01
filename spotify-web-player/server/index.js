@@ -6,8 +6,6 @@ const path = require("path")
 
 const port = 5000;
 
-global.access_token = "";
-
 dotenv.config();
 
 var spotify_client_id = process.env.SPOTIFY_CLIENT_ID;
@@ -70,13 +68,9 @@ app.get("/auth/callback", (req, res) => {
   request.post(authOptions, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       access_token = body.access_token;
-      res.redirect("/");
+      res.redirect("/?token=" + access_token);
     }
   });
-});
-
-app.get("/auth/token", (req, res) => {
-  res.json({ access_token: access_token });
 });
 
 app.listen(port, () => {
