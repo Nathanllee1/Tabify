@@ -67,7 +67,7 @@ function WebPlayback(props) {
 
     window.onSpotifyWebPlaybackSDKReady = () => {
       const player = new window.Spotify.Player({
-        name: "Web Playback SDK",
+        name: "Tabify",
         getOAuthToken: (cb) => {
           cb(props.token);
         },
