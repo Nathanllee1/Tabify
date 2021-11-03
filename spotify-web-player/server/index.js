@@ -4,6 +4,8 @@ const dotenv = require("dotenv");
 const fs = require("fs").promises;
 const path = require("path")
 
+const userServices = require('./models/user-services');
+
 const port = 5000;
 
 dotenv.config();
@@ -77,7 +79,7 @@ app.get("/auth/token", (req, res) => {
   res.json({ access_token: access_token });
 });
 
-app.get('/users', async (res) => {
+app.get('/users', async (req, res) => {
   try {
       const result = await userServices.getUsers();
       res.send({users_list: result});         

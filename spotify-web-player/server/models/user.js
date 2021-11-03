@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema({
     id: {
         type: String,
-        required: true,
+        //required: true,
     }
     // TODO: implement history with tab pref
 }, {collection : 'users_list'});
