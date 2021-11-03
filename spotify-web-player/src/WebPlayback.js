@@ -27,8 +27,11 @@ const useStyles = makeStyles({
     width: "20%"
 
   },
-  "song_title": {
-  }
+  "picture_container": {
+    display: "flex",
+    justifyContent: "center",
+  },
+
 })
 
 const track = {
@@ -107,10 +110,26 @@ function WebPlayback(props) {
       <>
         <div className="container">
           <div className="main-wrapper">
-            <b>
-              {" "}
-              Instance not active. Transfer your playback using your Spotify app{" "}
-            </b>
+              To get started, open your Spotify app and select <em style={{color:"#1dd760"}}>Tabify</em> as your Spotify player 
+              <br/>
+              <br/>
+              <br/>
+              <div className={classes.picture_container}>
+                <div>
+                  <br/>
+                  <h2>Desktop</h2>
+                  <img src="device_tabify.png" style={{width: "70%"}}/>
+                </div>
+
+                <div>
+                  <br/>
+                  <h2>Mobile</h2>
+                    <img src="mobile_1.jpg" style={{width: "50%"}}/> <br/> <br/>  
+                    <img src="mobile_2.jpg" style={{width: "50%"}}/>
+                </div>
+                
+              </div>
+              
           </div>
         </div>
       </>
