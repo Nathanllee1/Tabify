@@ -78,6 +78,25 @@ app.get("/auth/token", (req, res) => {
   res.json({ access_token: access_token });
 });
 
+app.get('/users', async (res) => {
+  try {
+      const result = await userServices.getUsers();
+      res.send({users_list: result});         
+  } catch (error) {
+      console.log(error);
+      res.status(500).send('An error occurred in the server.');
+  }
+});
+
+app.post('/users', async (req, res) => {
+  const user = req.body;
+  const savedUser = await userServices.addUser(user);
+  if (savedUser)
+      res.status(201).send(savedUser);
+  else
+      res.status(500).end();
+});
+
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
 });
