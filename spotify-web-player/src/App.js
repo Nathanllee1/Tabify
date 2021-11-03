@@ -26,13 +26,12 @@ function App() {
   const [token, setToken] = useState("");
 
   useEffect(() => {
-    async function getToken() {
-      const response = await fetch("/auth/token");
-      const json = await response.json();
-      setToken(json.access_token);
+    console.log(window.location.search);
+    const urlParams = new URLSearchParams(window.location.search);
+    let tok = urlParams.get("token");
+    if (tok) {
+      setToken(tok);
     }
-
-    getToken();
   }, []);
 
   return (
