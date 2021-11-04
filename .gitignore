@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/spotify-web-player/node_modules
 /.pnp
 .pnp.js
 
