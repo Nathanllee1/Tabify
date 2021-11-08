@@ -24,7 +24,8 @@ const useStyles = makeStyles({
     position: "sticky",
     alignSelf: "flex-start",
     top: "10%",
-    width: "20%"
+    width: "20%",
+    backgroundColor: "white" 
 
   },
   "picture_container": {

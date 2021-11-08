@@ -12,7 +12,12 @@ const useStyles = makeStyles({
     fontSize: "medium",
     fontWeight: "bold",
     width: "auto",
-    overflowWrap: "anywhere"
+    overflowWrap: "anywhere",
+    boxShadow: "0px 4px 4px 0px #00000040",
+    borderRadius: "15px",
+    backgroundColor: "white",
+    padding: "60px",
+    width: "100%"
   }
 })
 
