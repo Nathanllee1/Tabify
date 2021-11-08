@@ -57,7 +57,7 @@ app.get("/auth/callback", (req, res) => {
       grant_type: "authorization_code",
     },
     headers: {
-      Authorization:
+      Authorization: // this is the access token
         "Basic " +
         Buffer.from(spotify_client_id + ":" + spotify_client_secret).toString(
           "base64"
@@ -67,9 +67,24 @@ app.get("/auth/callback", (req, res) => {
     json: true,
   };
 
-  request.post(authOptions, function (error, response, body) {
+  request.post(authOptions, async function (error, response, body) {
     if (!error && response.statusCode === 200) {
       access_token = body.access_token;
+      var options = {
+        'method': 'GET',
+        'url': 'https://api.spotify.com/v1/me',
+        'headers': {
+          'Authorization': 'Bearer ' + access_token       
+        }
+      };
+
+      request(options, function (error, response) {
+        const user = req.body;
+        //const savedUser = await userServices.addUser(user);
+        if (error) throw new Error(error);
+        console.log(response.body);
+      });
+      
       res.redirect("/?token=" + access_token);
     }
   });
