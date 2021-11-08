@@ -25,5 +25,14 @@ async function getUsers() {
     return result;
 }
 
+async function deleteUserById(id) {
+    try {
+        return await userModel.findByIdAndDelete(id);
+    } catch(error) {
+        console.log(error);
+        return undefined;
+    }
+}
+
 exports.addUser = addUser;
 exports.getUsers = getUsers;
