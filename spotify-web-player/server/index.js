@@ -79,15 +79,7 @@ app.get("/auth/token", (req, res) => {
   res.json({ access_token: access_token });
 });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 app.get('/users', async (req, res) => {
-=======
-app.get('/users', async (res) => {
->>>>>>> 7134b22 (add user-services and endpoints)
-=======
-app.get('/users', async (res) => {
->>>>>>> 7134b22bbbc9027285d938ea32cc5885532310c9
   try {
       const result = await userServices.getUsers();
       res.send({users_list: result});         
