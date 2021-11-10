@@ -7,11 +7,11 @@ function ProgressBar(props) {
   const timer = () => {
     var interval = setInterval(() => {
       if (!is_paused && is_active) {
-        setPosition((position) => position + 300);
+        setPosition((position) => position + 100);
       }
       clearInterval(interval);
       return;
-    }, 300);
+    }, 100);
     return () => {
       clearInterval(interval);
     };
