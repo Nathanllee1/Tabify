@@ -1,6 +1,7 @@
 const express = require("express");
 const request = require("request");
 const dotenv = require("dotenv");
+const bodyParser = require('body-parser');
 const fs = require("fs").promises;
 const path = require("path")
 
@@ -27,6 +28,7 @@ var generateRandomString = function (length) {
 };
 
 var app = express();
+app.use(bodyParser.json());
 
 app.get("/auth/login", (req, res) => {
   var scope = "streaming user-read-email user-read-private";
@@ -78,9 +80,10 @@ app.get("/auth/callback", (req, res) => {
         }
       };
 
-      request(options, function (error, response) {
+      request(options, async function (error, response) {
         const user = req.body;
-        //const savedUser = await userServices.addUser(user);
+        const savedUser = await userServices.addUser(user);
+        console.log(response.body)
         if (error) throw new Error(error);
         console.log(response.body);
       });
@@ -104,13 +107,24 @@ app.get('/users', async (req, res) => {
   }
 });
 
+// app.post('/users', async (req, res) => {
+//   const user = req.body;
+//   console.log("user:\n");
+//   console.log(req);
+//   console.log(user);
+//   const savedUser = await userServices.addUser(user);
+//   console.log("savedUser:\n");
+//   console.log(savedUser);
+//   if (savedUser)
+//       res.status(201).send(savedUser);
+//   else
+//       res.status(500).end();
+// });
+
 app.post('/users', async (req, res) => {
   const user = req.body;
-  const savedUser = await userServices.addUser(user);
-  if (savedUser)
-      res.status(201).send(savedUser);
-  else
-      res.status(500).end();
+  console.log(user);
+  res.status(200).end();
 });
 
 app.listen(port, () => {

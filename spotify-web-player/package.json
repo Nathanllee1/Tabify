@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.8.3",
     "dompurify": "^2.3.3",
     "html-react-parser": "^1.4.0",
+    "mongoose": "^6.0.12",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^3.4.4",

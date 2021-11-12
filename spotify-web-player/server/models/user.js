@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
-    id: {
-        type: String,
-        //required: true,
-    }
+    country: String,
+    display_name: String,
+    email: String,
+    uri: String
     // TODO: implement history with tab pref
 }, {collection : 'users_list'});
 
