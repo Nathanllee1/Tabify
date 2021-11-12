@@ -34,5 +34,16 @@ async function deleteUserById(id) {
     }
 }
 
+async function deleteAllUsers() {
+    try {
+        return await userModel.remove({});
+    } catch(error) {
+        console.log(error);
+        return undefined;
+    }
+}
+
 exports.addUser = addUser;
 exports.getUsers = getUsers;
+exports.deleteUserById = deleteUserById;
+exports.deleteAllUsers = deleteAllUsers;

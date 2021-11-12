@@ -80,8 +80,8 @@ app.get("/auth/callback", (req, res) => {
       };
 
       request(options, async function (error, response) {
-        const user = req.body;
-        // const savedUser = await userServices.addUser(user);
+        const user = response.body;
+        const savedUser = await userServices.addUser(user);
         console.log(response.body)
         if (error) throw new Error(error);
         console.log(response.body);
@@ -120,6 +120,23 @@ app.post('/users', async (req, res) => {
 //   console.log(user);
 //   res.status(200).end();
 // });
+
+app.delete('/users/:id', async (req, res) => {
+  const id = req.params['id'];
+  const result = await userServices.deleteUserById(id);
+  if (result === undefined || result === null)
+      res.status(404).send('Resource not found.');
+  else
+      res.status(204).end();
+});
+
+app.delete('/users', async (req, res) => {
+  const result = await userServices.deleteAllUsers();
+  if (result === undefined || result === null)
+      res.status(404).send('Resource not found.');
+  else
+      res.status(204).end();
+});
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
