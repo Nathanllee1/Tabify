@@ -1,5 +1,10 @@
 {
   "devDependencies": {
     "prettier": "2.4.1"
+  },
+  "scripts": {
+    "test": "prettier --check .",
+    "dev": "nodemon backend_with_db.js",
+    "start": "node backend_with_db.js"
   }
 }

@@ -6,14 +6,19 @@ name: Node.js CI
 
 on:
   push:
-    branches: [cloud-database]
+    branches: [main]
   pull_request:
-    branches: [cloud-database]
+    branches: [main]
+
+defaults:
+  run:
+    working-directory: spotify-web-player
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      CI: false
     strategy:
       matrix:
         node-version: [12.x]
@@ -26,6 +31,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
+          cache-dependency-path: "spotify-web-player/package-lock.json"
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
