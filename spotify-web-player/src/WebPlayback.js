@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from "react";
-import Tab from './tab/tab.js';
+import Tab from "./tab/tab.js";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { mergeClasses, StylesContext } from "@material-ui/styles";
-
+import ProgressBar from "./ProgressBar.js";
 
 const useStyles = makeStyles({
-  "cover": {
-  },
-  "container": {
+  cover: {},
+  container: {
     display: "flex",
     justifyContent: "center",
     gap: "10%",
     flexWrap: "wrap",
-
   },
-  "controls": {
+  controls: {
     marginTop: "1em",
     boxShadow: "0px 4px 4px 0px #00000040",
     padding: "30px",
@@ -26,14 +24,13 @@ const useStyles = makeStyles({
     top: "10%",
     width: "20%",
     backgroundColor: "white" 
-
   },
+  song_title: {},
   "picture_container": {
     display: "flex",
     justifyContent: "center",
   },
-
-})
+});
 
 const track = {
   name: "",
@@ -48,19 +45,18 @@ function WebPlayback(props) {
   const [is_active, setActive] = useState(false);
   const [player, setPlayer] = useState(undefined);
   const [current_track, setTrack] = useState(track);
+  const [position, setPosition] = useState(0);
+  const [currentDuration, setCurrentDuration] = useState(0);
 
-  const [history, add_history] = useState([])
+  const [history, add_history] = useState([]);
 
   const classes = useStyles();
 
   useEffect(() => {
-    
-    console.log(history[history.length - 1] === current_track.name)
     if (history[history.length - 1] !== current_track.name) {
-      console.log("switched to ", current_track);
       add_history([...history, current_track]);
     }
-  }, [current_track])
+  }, [current_track]);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -79,6 +75,7 @@ function WebPlayback(props) {
       });
 
       setPlayer(player);
+      console.log(player.dur);
 
       player.addListener("ready", ({ device_id }) => {
         console.log("Ready with Device ID", device_id);
@@ -92,11 +89,12 @@ function WebPlayback(props) {
         if (!state) {
           return;
         }
-        
-        setTrack(state.track_window.current_track);      
-        
-        setPaused(state.paused);
 
+        setCurrentDuration(state.duration);
+        setTrack(state.track_window.current_track);
+
+        setPaused(state.paused);
+        setPosition(state.position); // update position if song is paused
         player.getCurrentState().then((state) => {
           !state ? setActive(false) : setActive(true);
         });
@@ -136,8 +134,6 @@ function WebPlayback(props) {
       </>
     );
   } else {
-    console.log("artists");
-    console.log(current_track.artists)
     return (
       <>
         <div className={classes.container}>
@@ -148,12 +144,12 @@ function WebPlayback(props) {
               alt=""
             />
             <div className="now-playing__side">
-            <br/>
+              <br />
               <h2 className={classes.song_title}>{current_track.name}</h2>
               <h3 className="now-playing__artist">
                 {current_track.artists[0].name}
               </h3>
-              <br/>
+              <br />
               <button
                 className="btn-spotify"
                 onClick={() => {
@@ -180,10 +176,15 @@ function WebPlayback(props) {
               >
                 &gt;&gt;
               </button>
+              <ProgressBar
+                is_paused={is_paused}
+                is_active={is_active}
+                start_position={position}
+                duration={currentDuration}
+              />
             </div>
-            
           </div>
-          <Tab track={current_track}/>
+          <Tab track={current_track} />
         </div>
       </>
     );
