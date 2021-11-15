@@ -17,7 +17,12 @@ function ProgressBar(props) {
     };
   };
   useEffect(timer, [position, is_paused]);
-
-  return <progress max={duration} value={position}></progress>;
+  return (
+    <div class="demo-wrapper html5-progress-bar">
+      <div class="progress-bar-wrapper">
+        <progress id="progressbar" value={position} max={duration}></progress>
+      </div>
+    </div>
+  );
 }
 export default ProgressBar;
