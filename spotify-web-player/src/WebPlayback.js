@@ -81,7 +81,7 @@ function WebPlayback(props) {
 
       player.addListener("ready", ({ device_id }) => {
         console.log("Ready with Device ID", device_id);
-
+        /*
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + props.token);
         myHeaders.append("Content-Type", "text/plain");
@@ -101,6 +101,7 @@ function WebPlayback(props) {
           .then(response => response.text())
           .then(result => console.log(result))
           .catch(error => console.log('error', error));
+          */
       });
 
       player.addListener("not_ready", ({ device_id }) => {
