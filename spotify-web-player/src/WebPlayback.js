@@ -89,12 +89,12 @@ function WebPlayback(props) {
         if (!state) {
           return;
         }
-
         setCurrentDuration(state.duration);
         setTrack(state.track_window.current_track);
-
+  
         setPaused(state.paused);
         setPosition(state.position); // update position if song is paused
+        console.log("position changed " + state.position);
         player.getCurrentState().then((state) => {
           !state ? setActive(false) : setActive(true);
         });
@@ -180,6 +180,7 @@ function WebPlayback(props) {
                 is_paused={is_paused}
                 is_active={is_active}
                 start_position={position}
+                currentPosition={position}
                 duration={currentDuration}
               />
             </div>
