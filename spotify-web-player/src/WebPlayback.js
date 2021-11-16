@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
-import Tab from "./tab/tab.js";
-
+import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
+import PauseCircleFilledIcon from "@mui/icons-material/PauseCircleFilled";
+import SkipNextIcon from "@mui/icons-material/SkipNext";
+import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import { makeStyles } from "@material-ui/core/styles";
 import { mergeClasses, StylesContext } from "@material-ui/styles";
-import ProgressBar from "./ProgressBar.js";
+
+import Tab from "./tab/tab.js";
+import "./progress.css";
 
 const useStyles = makeStyles({
-  cover: {},
+  cover: {
+    maxWidth: "100%"
+  },
   container: {
     display: "flex",
     justifyContent: "center",
@@ -166,32 +172,29 @@ function WebPlayback(props) {
                 {current_track.artists[0].name}
               </h3>
               <br />
-              <button
-                className="btn-spotify"
+              <SkipPreviousIcon
                 onClick={() => {
                   player.previousTrack();
                 }}
-              >
-                &lt;&lt;
-              </button>
-
-              <button
-                className="btn-spotify"
-                onClick={() => {
-                  player.togglePlay();
-                }}
-              >
-                {is_paused ? "PLAY" : "PAUSE"}
-              </button>
-
-              <button
-                className="btn-spotify"
+              />
+              {is_paused ? (
+                <PlayCircleFilledIcon
+                  onClick={() => {
+                    player.togglePlay();
+                  }}
+                />
+              ) : (
+                <PauseCircleFilledIcon
+                  onClick={() => {
+                    player.togglePlay();
+                  }}
+                />
+              )}
+              <SkipNextIcon
                 onClick={() => {
                   player.nextTrack();
                 }}
-              >
-                &gt;&gt;
-              </button>
+              />
               <div className="demo-wrapper html5-progress-bar">
                 <div className="progress-bar-wrapper">
                   <progress
