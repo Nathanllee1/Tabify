@@ -5,7 +5,6 @@ import SkipNextIcon from "@mui/icons-material/SkipNext";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import { makeStyles } from "@material-ui/core/styles";
 import { mergeClasses, StylesContext } from "@material-ui/styles";
-
 import Tab from "./tab/tab.js";
 import "./progress.css";
 
