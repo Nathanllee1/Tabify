@@ -29,7 +29,7 @@ const useStyles = makeStyles({
     alignSelf: "flex-start",
     top: "10%",
     width: "20%",
-    backgroundColor: "white",
+    backgroundColor: "white"
   },
   song_title: {},
   picture_container: {
@@ -85,6 +85,26 @@ function WebPlayback(props) {
 
       player.addListener("ready", ({ device_id }) => {
         console.log("Ready with Device ID", device_id);
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + props.token);
+        myHeaders.append("Content-Type", "text/plain");
+
+        console.log(myHeaders.Authorization);
+
+        var raw = "{\n  \"device_ids\": [\n    \"" + device_id + "\"\n  ]\n}";
+
+        var requestOptions = {
+          method: 'PUT',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        fetch("https://api.spotify.com/v1/me/player", requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
       });
 
       player.addListener("not_ready", ({ device_id }) => {
@@ -131,8 +151,7 @@ function WebPlayback(props) {
       <>
         <div className="container">
           <div className="main-wrapper">
-            To get started, open your Spotify app and select{" "}
-            <em style={{ color: "#1dd760" }}>Tabify</em> as your Spotify player
+            To get started, open your Spotify app and select <em style={{ color: "#1dd760" }}>Tabify</em> as your Spotify player
             <br />
             <br />
             <br />
@@ -146,10 +165,10 @@ function WebPlayback(props) {
               <div>
                 <br />
                 <h2>Mobile</h2>
-                <img src="mobile_1.jpg" style={{ width: "50%" }} /> <br />{" "}
-                <br />
+                <img src="mobile_1.jpg" style={{ width: "50%" }} /> <br /> <br />
                 <img src="mobile_2.jpg" style={{ width: "50%" }} />
               </div>
+
             </div>
           </div>
         </div>
@@ -204,8 +223,6 @@ function WebPlayback(props) {
                   ></progress>
                 </div>
               </div>
-            </div>
-          </div>
           <Tab track={current_track} />
         </div>
       </>
