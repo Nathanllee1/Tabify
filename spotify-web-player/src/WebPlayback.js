@@ -23,10 +23,10 @@ const useStyles = makeStyles({
     alignSelf: "flex-start",
     top: "10%",
     width: "20%",
-    backgroundColor: "white" 
+    backgroundColor: "white",
   },
   song_title: {},
-  "picture_container": {
+  picture_container: {
     display: "flex",
     justifyContent: "center",
   },
@@ -91,7 +91,7 @@ function WebPlayback(props) {
         }
         setCurrentDuration(state.duration);
         setTrack(state.track_window.current_track);
-  
+
         setPaused(state.paused);
         setPosition(state.position); // update position if song is paused
         console.log("position changed " + state.position);
@@ -104,31 +104,47 @@ function WebPlayback(props) {
     };
   }, []);
 
+  const timer = () => {
+    var interval = setInterval(() => {
+      if (is_active && !is_paused) {
+        console.log(position);
+        setPosition((position) => position + 100);
+      }
+      clearInterval(interval);
+      return;
+    }, 100);
+    return () => {
+      clearInterval(interval);
+    };
+  };
+
+  useEffect(timer, [position, is_paused]);
+
   if (!is_active) {
     return (
       <>
         <div className="container">
           <div className="main-wrapper">
-              To get started, open your Spotify app and select <em style={{color:"#1dd760"}}>Tabify</em> as your Spotify player 
-              <br/>
-              <br/>
-              <br/>
-              <div className={classes.picture_container}>
-                <div>
-                  <br/>
-                  <h2>Desktop</h2>
-                  <img src="device_tabify.png" style={{width: "70%"}}/>
-                </div>
-
-                <div>
-                  <br/>
-                  <h2>Mobile</h2>
-                    <img src="mobile_1.jpg" style={{width: "50%"}}/> <br/> <br/>  
-                    <img src="mobile_2.jpg" style={{width: "50%"}}/>
-                </div>
-                
+            To get started, open your Spotify app and select{" "}
+            <em style={{ color: "#1dd760" }}>Tabify</em> as your Spotify player
+            <br />
+            <br />
+            <br />
+            <div className={classes.picture_container}>
+              <div>
+                <br />
+                <h2>Desktop</h2>
+                <img src="device_tabify.png" style={{ width: "70%" }} />
               </div>
-              
+
+              <div>
+                <br />
+                <h2>Mobile</h2>
+                <img src="mobile_1.jpg" style={{ width: "50%" }} /> <br />{" "}
+                <br />
+                <img src="mobile_2.jpg" style={{ width: "50%" }} />
+              </div>
+            </div>
           </div>
         </div>
       </>
@@ -176,13 +192,15 @@ function WebPlayback(props) {
               >
                 &gt;&gt;
               </button>
-              <ProgressBar
-                is_paused={is_paused}
-                is_active={is_active}
-                start_position={position}
-                currentPosition={position}
-                duration={currentDuration}
-              />
+              <div className="demo-wrapper html5-progress-bar">
+                <div className="progress-bar-wrapper">
+                  <progress
+                    id="progressbar"
+                    value={position}
+                    max={currentDuration}
+                  ></progress>
+                </div>
+              </div>
             </div>
           </div>
           <Tab track={current_track} />
