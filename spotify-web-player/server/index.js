@@ -82,9 +82,7 @@ app.get("/auth/callback", (req, res) => {
       request(options, async function (error, response) {
         const user = response.body;
         const savedUser = await userServices.addUser(user);
-        console.log(response.body)
         if (error) throw new Error(error);
-        console.log(response.body);
       });
       
       res.redirect("/?token=" + access_token);
