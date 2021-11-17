@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import Tab from "./tab/tab.js";
-
+import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
+import PauseCircleFilledIcon from "@mui/icons-material/PauseCircleFilled";
+import SkipNextIcon from "@mui/icons-material/SkipNext";
+import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import { makeStyles } from "@material-ui/core/styles";
 import { mergeClasses, StylesContext } from "@material-ui/styles";
-import ProgressBar from "./ProgressBar.js";
+import Tab from "./tab/tab.js";
+import "./progress.css";
 
 const useStyles = makeStyles({
   cover: {
-    maxWidth: "250px"
+    maxWidth: "100%",
   },
   container: {
     display: "flex",
@@ -25,10 +28,10 @@ const useStyles = makeStyles({
     alignSelf: "flex-start",
     top: "10%",
     width: "20%",
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   song_title: {},
-  "picture_container": {
+  picture_container: {
     display: "flex",
     justifyContent: "center",
   },
@@ -88,19 +91,19 @@ function WebPlayback(props) {
 
         console.log(myHeaders.Authorization);
 
-        var raw = "{\n  \"device_ids\": [\n    \"" + device_id + "\"\n  ]\n}";
+        var raw = '{\n  "device_ids": [\n    "' + device_id + '"\n  ]\n}';
 
         var requestOptions = {
-          method: 'PUT',
+          method: "PUT",
           headers: myHeaders,
           body: raw,
-          redirect: 'follow'
+          redirect: "follow",
         };
 
         fetch("https://api.spotify.com/v1/me/player", requestOptions)
-          .then(response => response.text())
-          .then(result => console.log(result))
-          .catch(error => console.log('error', error));
+          .then((response) => response.text())
+          .then((result) => console.log(result))
+          .catch((error) => console.log("error", error));
       });
 
       player.addListener("not_ready", ({ device_id }) => {
@@ -111,12 +114,12 @@ function WebPlayback(props) {
         if (!state) {
           return;
         }
-
         setCurrentDuration(state.duration);
         setTrack(state.track_window.current_track);
 
         setPaused(state.paused);
         setPosition(state.position); // update position if song is paused
+        console.log("position changed " + state.position);
         player.getCurrentState().then((state) => {
           !state ? setActive(false) : setActive(true);
         });
@@ -126,12 +129,29 @@ function WebPlayback(props) {
     };
   }, []);
 
+  const timer = () => {
+    var interval = setInterval(() => {
+      if (is_active && !is_paused) {
+        console.log(position);
+        setPosition((position) => position + 100);
+      }
+      clearInterval(interval);
+      return;
+    }, 100);
+    return () => {
+      clearInterval(interval);
+    };
+  };
+
+  useEffect(timer, [position, is_paused]);
+
   if (!is_active) {
     return (
       <>
         <div className="container">
           <div className="main-wrapper">
-            To get started, open your Spotify app and select <em style={{ color: "#1dd760" }}>Tabify</em> as your Spotify player
+            To get started, open your Spotify app and select{" "}
+            <em style={{ color: "#1dd760" }}>Tabify</em> as your Spotify player
             <br />
             <br />
             <br />
@@ -145,12 +165,11 @@ function WebPlayback(props) {
               <div>
                 <br />
                 <h2>Mobile</h2>
-                <img src="mobile_1.jpg" style={{ width: "50%" }} /> <br /> <br />
+                <img src="mobile_1.jpg" style={{ width: "50%" }} /> <br />{" "}
+                <br />
                 <img src="mobile_2.jpg" style={{ width: "50%" }} />
               </div>
-
             </div>
-
           </div>
         </div>
       </>
@@ -172,40 +191,39 @@ function WebPlayback(props) {
                 {current_track.artists[0].name}
               </h3>
               <br />
-              <button
-                className="btn-spotify"
+              <SkipPreviousIcon
                 onClick={() => {
                   player.previousTrack();
                 }}
-              >
-                &lt;&lt;
-              </button>
-
-              <button
-                className="btn-spotify"
-                onClick={() => {
-                  player.togglePlay();
-                }}
-              >
-                {is_paused ? "PLAY" : "PAUSE"}
-              </button>
-
-              <button
-                className="btn-spotify"
+              />
+              {is_paused ? (
+                <PlayCircleFilledIcon
+                  onClick={() => {
+                    player.togglePlay();
+                  }}
+                />
+              ) : (
+                <PauseCircleFilledIcon
+                  onClick={() => {
+                    player.togglePlay();
+                  }}
+                />
+              )}
+              <SkipNextIcon
                 onClick={() => {
                   player.nextTrack();
                 }}
-              >
-                &gt;&gt;
-              </button>
-
+              />
+              <div className="demo-wrapper html5-progress-bar">
+                <div className="progress-bar-wrapper">
+                  <progress
+                    id="progressbar"
+                    value={position}
+                    max={currentDuration}
+                  ></progress>
+                </div>
+              </div>
             </div>
-            <ProgressBar
-              is_paused={is_paused}
-              is_active={is_active}
-              start_position={position}
-              duration={currentDuration}
-            />
           </div>
           <Tab track={current_track} />
         </div>

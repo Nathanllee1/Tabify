@@ -6,20 +6,20 @@ import "./App.css";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
-  "logo_container": {
+  logo_container: {
     display: "flex",
     margin: "2%",
     alignItems: "center",
     gap: "5px",
-    height: "15%"
+    height: "15%",
   },
-  "app_container" : {
-    textAlign:"center",
+  app_container: {
+    textAlign: "center",
     marginTop: "2%",
     height: "75%",
-    display: "block"
-  }
-})
+    display: "block",
+  },
+});
 
 function App() {
   const classes = useStyles();
@@ -41,11 +41,9 @@ function App() {
         <img src="tabify_logo.png" />
       </div>
       <div className={classes.app_container}>
-      <>{token === "" ? <Login /> : <WebPlayback token={token} />}</>
+        <>{token === "" ? <Login /> : <WebPlayback token={token} />}</>
       </div>
-      
     </div>
-    
   );
 }
 
