@@ -4,7 +4,10 @@ const UserSchema = new mongoose.Schema({
     country: String,
     display_name: String,
     email: String,
-    uri: String
+    uri: {
+        type: String,
+        unique: true
+    }
     // TODO: implement history with tab pref
 }, {collection : 'users_list'});
 
