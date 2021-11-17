@@ -2,12 +2,10 @@ import React, { useState, useEffect } from "react";
 import parse from "html-react-parser";
 import DOMPurify from "dompurify";
 
-
 import { makeStyles } from "@material-ui/core/styles";
 
-
 const useStyles = makeStyles({
-  tab : {
+  tab: {
     textAlign: "left",
     fontSize: "medium",
     fontWeight: "bold",
@@ -17,9 +15,9 @@ const useStyles = makeStyles({
     borderRadius: "15px",
     backgroundColor: "white",
     padding: "60px",
-    width: "100%"
-  }
-})
+    width: "100%",
+  },
+});
 
 const track = {
   name: "",
@@ -29,39 +27,39 @@ const track = {
   artists: [{ name: "" }],
 };
 
+function Tab(props) {
+  const { track } = props;
 
-function Tab(props) { 
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const [tabHTML, setTabHTML] = useState("");
 
-   const { track } = props; 
+  const classes = useStyles();
 
-   const [currentTrack, setCurrentTrack] = useState(null);
-   const [tabHTML, setTabHTML] = useState('');
-
-   const classes = useStyles();
-
-   function cleanHTML(rawHTML) {
-      const html = DOMPurify.sanitize(rawHTML, {
-         USE_PROFILES: { html: true },
-       })
-       setTabHTML(html);
-   }
+  function cleanHTML(rawHTML) {
+    const html = DOMPurify.sanitize(rawHTML, {
+      USE_PROFILES: { html: true },
+    });
+    setTabHTML(html);
+  }
 
   useEffect(() => {
     async function getTab() {
-      const response = await fetch(`/api/gettabs?name=${track.name}&topArtist=${track.artists[0].name}`);
+      const response = await fetch(
+        `/api/gettabs?name=${track.name}&topArtist=${track.artists[0].name}`
+      );
       const json = await response.json();
       cleanHTML(json.tabs[0]);
-      console.log(tabHTML)
+      console.log(tabHTML);
     }
     getTab();
     setCurrentTrack(track);
   }, []);
 
-    return (
-       <div>
-        <div className={classes.tab}>{parse(tabHTML)}</div> 
-      </div>
-    )
+  return (
+    <div>
+      <div className={classes.tab}>{parse(tabHTML)}</div>
+    </div>
+  );
 }
 
 export default Tab;

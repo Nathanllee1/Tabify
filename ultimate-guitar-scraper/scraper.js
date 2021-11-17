@@ -1,16 +1,17 @@
-var url = require('url'),
-cheerio = require('cheerio');
+var url = require("url"),
+  cheerio = require("cheerio");
 
-function formatSearchUrl(artist_name, song_name){
-        // Builds the search URL from the artist and song names
-        base_url = 'https://www.ultimate-guitar.com/search.php?title='
-        encoded_url = encodeURI(base_url.concat(artist_name, ' ', song_name, '&page=1&type=300'))
+function formatSearchUrl(artist_name, song_name) {
+  // Builds the search URL from the artist and song names
+  base_url = "https://www.ultimate-guitar.com/search.php?title=";
+  encoded_url = encodeURI(
+    base_url.concat(artist_name, " ", song_name, "&page=1&type=300")
+  );
 }
 
-function getTabURL(){
-        // Gets the URL of the correct Tab from the Search page
-
-        /*
+function getTabURL() {
+  // Gets the URL of the correct Tab from the Search page
+  /*
 
         Make sure to select the first tab of that kind.
 
@@ -36,11 +37,10 @@ function getTabURL(){
         maybe contains chords 
 
         */
-
 }
 
 function scrapeTabHTML() {
-        // Scrapes the Tab HTML from the Tab page
-        const $ = cheerio.load('<section class="_3cXAr _1G5k-">...</section>');
-        return $.html();  
+  // Scrapes the Tab HTML from the Tab page
+  const $ = cheerio.load('<section class="_3cXAr _1G5k-">...</section>');
+  return $.html();
 }

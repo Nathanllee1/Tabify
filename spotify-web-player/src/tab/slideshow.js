@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-function Slideshow(props) { 
-
-}
+function Slideshow(props) {}
 
 export default Slideshow;
