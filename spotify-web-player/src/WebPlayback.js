@@ -10,7 +10,7 @@ import "./progress.css";
 
 const useStyles = makeStyles({
   cover: {
-    maxWidth: "100%"
+    maxWidth: "100%",
   },
   container: {
     display: "flex",
