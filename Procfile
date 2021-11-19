@@ -1,0 +1,1 @@
+web: node spotify-web-player/server/index.js --prod
