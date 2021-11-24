@@ -1,1 +1,1 @@
-web: cd spotify-web-player && node spotify-web-player/server/index.js --prod
+web: npm run prod
