@@ -12,7 +12,6 @@ var spotify_client_id = process.env.SPOTIFY_CLIENT_ID;
 var spotify_client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 
 var spotify_redirect_uri = "http://localhost:3000/auth/callback";
-console.log(process.argv[2])
 if (process.argv[2] == "--prod") {
   spotify_redirect_uri = "https://tabify-app.herokuapp.com/auth/callback";
 }
