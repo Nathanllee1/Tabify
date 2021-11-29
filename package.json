@@ -16,7 +16,8 @@
     "test": "echo no tests lmao",
     "eject": "react-scripts eject",
     "dev": "run-p server start",
-    "prod": "node server/index.js --prod"
+    "prod": "node server/index.js --prod",
+    "server": "node server/index.js"
   },
   "eslintConfig": {
     "extends": [
