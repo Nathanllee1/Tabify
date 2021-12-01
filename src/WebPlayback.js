@@ -57,9 +57,16 @@ function WebPlayback(props) {
 
   const classes = useStyles();
 
+  let current_song = track;
+
   useEffect(() => {
-    if (history[history.length - 1] !== current_track.name) {
+    if (history[history.length - 1] && history[history.length - 1].name !== current_track.name) {
       add_history([...history, current_track]);
+
+      current_song = current_track;
+
+      console.log("Switching track to", current_song.name);
+      
     }
   }, [current_track]);
 
@@ -120,7 +127,6 @@ function WebPlayback(props) {
 
         setPaused(state.paused);
         setPosition(state.position); // update position if song is paused
-        console.log("position changed " + state.position);
         player.getCurrentState().then((state) => {
           !state ? setActive(false) : setActive(true);
         });
@@ -133,7 +139,6 @@ function WebPlayback(props) {
   const timer = () => {
     var interval = setInterval(() => {
       if (is_active && !is_paused) {
-        console.log(position);
         setPosition((position) => position + 100);
       }
       clearInterval(interval);
@@ -226,7 +231,7 @@ function WebPlayback(props) {
               </div>
             </div>
           </div>
-          <Tab track={current_track} />
+          <Tab track={current_song} />
         </div>
       </>
     );

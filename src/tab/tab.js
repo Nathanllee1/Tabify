@@ -40,18 +40,22 @@ function Tab(props) {
       USE_PROFILES: { html: true },
     });
     setTabHTML(html);
-  }
+  } 
 
   useEffect(() => {
     async function getTab() {
-      console.log("Fetching ", `https://tabify-scraper.herokuapp.com/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`)
-      const response = await fetch(`https://tabify-scraper.herokuapp.com/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`);
-      const json = await response.json();
 
-      cleanHTML(json.TAB);
-      console.log(tabHTML)
+      if (track) {
+        console.log("Fetching ", `https://tabify-scraper.herokuapp.com/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`)
+        const response = await fetch(`https://tabify-scraper.herokuapp.com/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`);
+        const json = await response.json();
+  
+        cleanHTML(json.TAB);
+        console.log(tabHTML)
+      }
+      
     }
-    getTab();
+    // getTab();
     setCurrentTrack(track);
   }, [props.track]);
 
