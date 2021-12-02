@@ -3,9 +3,9 @@ import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import PauseCircleFilledIcon from "@mui/icons-material/PauseCircleFilled";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
-import useWindowDimensions from "./useWindowDimensions.js";
 import { makeStyles } from "@material-ui/core/styles";
 import { mergeClasses, StylesContext } from "@material-ui/styles";
+import Navbar from "./Navbar";
 import Tab from "./tab/tab.js";
 import "./progress.css";
 
@@ -15,6 +15,7 @@ const useStyles = makeStyles({
   },
   container: {
     display: "flex",
+    marginTop: "15%",
     justifyContent: "center",
     gap: "10%",
     flexWrap: "wrap",
@@ -54,11 +55,9 @@ function WebPlayback(props) {
   const [position, setPosition] = useState(0);
   const [currentDuration, setCurrentDuration] = useState(0);
   const [history, add_history] = useState([]);
+  const [autoScroll, setAutoScroll] = useState(false);
 
   const classes = useStyles();
-
-  const { height, width } = useWindowDimensions();
-  const bottomRef = useRef();
 
   useEffect(() => {
     if (history[history.length - 1] !== current_track.name) {
@@ -83,8 +82,6 @@ function WebPlayback(props) {
       });
 
       setPlayer(player);
-
-      console.log(current_track.duration);
 
       player.addListener("ready", ({ device_id }) => {
         console.log("Ready with Device ID", device_id);
@@ -133,15 +130,25 @@ function WebPlayback(props) {
     };
   }, []);
 
+  useEffect(() => {
+    //window.addEventListener("scroll", turnOffAutoScroll);
+  }, []);
+
+  function toggleAutoScroll() {
+    setAutoScroll(!autoScroll);
+  }
+
   const timer = () => {
     var interval = setInterval(() => {
       if (is_active && !is_paused) {
         console.log((position / currentDuration) * window.innerHeight);
-        window.scrollTo({
-          top: (position / currentDuration) * window.innerHeight,
-          left: 0,
-          behavior: 'smooth'
-        });
+        if (autoScroll) {
+          window.scrollTo({
+            top: (position / currentDuration) * window.innerHeight,
+            left: 0,
+            behavior: "smooth",
+          });
+        }
         setPosition((position) => position + 100);
       }
       clearInterval(interval);
@@ -157,6 +164,7 @@ function WebPlayback(props) {
   if (!is_active) {
     return (
       <>
+        <Navbar playing={false} autoScroll={autoScroll} toggleAutoScroll={toggleAutoScroll} />
         <div className="container">
           <div className="main-wrapper">
             To get started, open your Spotify app and select{" "}
@@ -186,6 +194,7 @@ function WebPlayback(props) {
   } else {
     return (
       <>
+        <Navbar playing={true} autoScroll={autoScroll} toggleAutoScroll={toggleAutoScroll} />
         <div className={classes.container}>
           <div className={classes.controls}>
             <img

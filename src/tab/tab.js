@@ -11,6 +11,7 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     width: "auto",
     overflowWrap: "anywhere",
+    overflowY: "scroll",
     boxShadow: "0px 4px 4px 0px #00000040",
     borderRadius: "15px",
     backgroundColor: "white",
