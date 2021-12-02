@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import PauseCircleFilledIcon from "@mui/icons-material/PauseCircleFilled";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
+import useWindowDimensions from "./useWindowDimensions.js";
 import { makeStyles } from "@material-ui/core/styles";
 import { mergeClasses, StylesContext } from "@material-ui/styles";
 import Tab from "./tab/tab.js";
@@ -52,10 +53,12 @@ function WebPlayback(props) {
   const [current_track, setTrack] = useState(track);
   const [position, setPosition] = useState(0);
   const [currentDuration, setCurrentDuration] = useState(0);
-
   const [history, add_history] = useState([]);
 
   const classes = useStyles();
+
+  const { height, width } = useWindowDimensions();
+  const bottomRef = useRef();
 
   useEffect(() => {
     if (history[history.length - 1] !== current_track.name) {
@@ -80,7 +83,8 @@ function WebPlayback(props) {
       });
 
       setPlayer(player);
-      console.log(player.dur);
+
+      console.log(current_track.duration);
 
       player.addListener("ready", ({ device_id }) => {
         console.log("Ready with Device ID", device_id);
@@ -120,7 +124,6 @@ function WebPlayback(props) {
 
         setPaused(state.paused);
         setPosition(state.position); // update position if song is paused
-        console.log("position changed " + state.position);
         player.getCurrentState().then((state) => {
           !state ? setActive(false) : setActive(true);
         });
@@ -133,7 +136,8 @@ function WebPlayback(props) {
   const timer = () => {
     var interval = setInterval(() => {
       if (is_active && !is_paused) {
-        console.log(position);
+        console.log((position / currentDuration) * window.innerHeight);
+        window.scrollTo(0, (position / currentDuration) * window.innerHeight);
         setPosition((position) => position + 100);
       }
       clearInterval(interval);
