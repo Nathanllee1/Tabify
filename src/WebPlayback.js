@@ -137,7 +137,11 @@ function WebPlayback(props) {
     var interval = setInterval(() => {
       if (is_active && !is_paused) {
         console.log((position / currentDuration) * window.innerHeight);
-        window.scrollTo(0, (position / currentDuration) * window.innerHeight);
+        window.scrollTo({
+          top: (position / currentDuration) * window.innerHeight,
+          left: 0,
+          behavior: 'smooth'
+        });
         setPosition((position) => position + 100);
       }
       clearInterval(interval);
