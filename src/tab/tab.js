@@ -51,11 +51,10 @@ function Tab(props) {
         const json = await response.json();
   
         cleanHTML(json.TAB);
-        console.log(tabHTML)
       }
       
     }
-    // getTab();
+    getTab();
     setCurrentTrack(track);
   }, [props.track]);
 
