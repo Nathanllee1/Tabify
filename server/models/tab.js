@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const UserSchema = new mongoose.Schema(
+const TabSchema = new mongoose.Schema(
   {
     id: {
       type: String,
@@ -11,6 +11,6 @@ const UserSchema = new mongoose.Schema(
   { collection: "users_list" }
 );
 
-const User = mongoose.model("User", UserSchema);
+const Tab = mongoose.model("Tab", TabSchema);
 
-module.exports = User;
+module.exports = Tab;
