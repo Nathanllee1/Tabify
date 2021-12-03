@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import parse from "html-react-parser";
 import DOMPurify from "dompurify";
 
@@ -10,13 +10,13 @@ const useStyles = makeStyles({
     fontSize: "medium",
     fontWeight: "bold",
     width: "auto",
+    height: "65vh",
     overflowWrap: "anywhere",
     overflowY: "scroll",
     boxShadow: "0px 4px 4px 0px #00000040",
     borderRadius: "15px",
     backgroundColor: "white",
     padding: "60px",
-    width: "100%",
   },
 });
 
@@ -28,8 +28,8 @@ const track = {
   artists: [{ name: "" }],
 };
 
-function Tab(props) {
-  const { track } = props;
+const Tab = forwardRef((props, ref) => {
+  const { track, setTabFetched } = props;
 
   const [currentTrack, setCurrentTrack] = useState(null);
   const [tabHTML, setTabHTML] = useState("");
@@ -45,20 +45,24 @@ function Tab(props) {
 
   useEffect(() => {
     async function getTab() {
-  //    console.log("Fetching ", `https://tabify-scraper.herokuapp.com/api/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`)
-      const response = await fetch(`https://tabify-scraper.herokuapp.com/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`);
+      //    console.log("Fetching ", `https://tabify-scraper.herokuapp.com/api/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`)
+      const response = await fetch(
+        `https://tabify-scraper.herokuapp.com/gettab?song_name=${encodeURIComponent(
+          track.name
+        )}&artist_name=${encodeURIComponent(track.artists[0].name)}`
+      );
       const json = await response.json();
       cleanHTML(json.TAB);
     }
+    setTabFetched(false);
     getTab();
+    setTabFetched(true);
     setCurrentTrack(track);
   }, [props.track]);
 
   return (
-    <div>
-      <div className={classes.tab}>{parse(tabHTML)}</div>
-    </div>
+      <div className={classes.tab} ref={ref}>{parse(tabHTML)}</div>
   );
-}
+});
 
 export default Tab;

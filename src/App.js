@@ -3,38 +3,37 @@ import WebPlayback from "./WebPlayback";
 import Login from "./Login";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import "./App.css";
-
 import { makeStyles } from "@material-ui/core/styles";
+import Navbar from "./Navbar";
+
+const THEME = createTheme({
+  typography: {
+    fontFamily: `Menlo, Monaco, Consolas, "Courier New", monospace`,
+  },
+});
 
 const useStyles = makeStyles({
-  logo_container: {
-    display: "flex",
-    margin: "2%",
-    alignItems: "center",
-    gap: "5px",
-    height: "15%",
+  container: {
+    height: "100vh",
   },
   app_container: {
     textAlign: "center",
-    marginTop: "15%",
+    align : "center",
+    marginTop: "10%",
     height: "75%",
     display: "block",
   },
 });
 
-const THEME = createTheme({
-  typography: {
-   "fontFamily": `Menlo, Monaco, Consolas, "Courier New", monospace`,
-  }
-});
-
-
 function App() {
-  const classes = useStyles();
   const [token, setToken] = useState("");
+  // Whether or not tabify is synced up with user's spotify music
+  const [musicConnected, setMusicConnected] = useState(false);
+  // Whether autoscroll is enabled
+  const [autoScroll, setAutoScroll] = useState(false);
+  const classes = useStyles();
 
   useEffect(() => {
-    console.log(window.location.search);
     const urlParams = new URLSearchParams(window.location.search);
     let tok = urlParams.get("token");
     if (tok) {
@@ -43,10 +42,23 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className={classes.container}>
       <MuiThemeProvider theme={THEME}>
+        <Navbar
+          musicConnected={musicConnected}
+          autoScroll={autoScroll}
+          setAutoScroll={setAutoScroll}
+        />
         <div className={classes.app_container}>
-          <>{token === "" ? <Login /> : <WebPlayback token={token} />}</>
+          {token === "" ? (
+            <Login />
+          ) : (
+            <WebPlayback
+              token={token}
+              setMusicConnected={setMusicConnected}
+              autoScroll={autoScroll}
+            />
+          )}
         </div>
       </MuiThemeProvider>
     </div>

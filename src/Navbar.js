@@ -14,7 +14,11 @@ const StyledNav = styled(AppBar)`
 `;
 
 export default function ButtonAppBar(props) {
-  const { playing, autoScroll, toggleAutoScroll } = props;
+  const { musicConnected, autoScroll, setAutoScroll } = props;
+  
+  function toggleAutoScroll() {
+    setAutoScroll(!autoScroll);
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -22,7 +26,7 @@ export default function ButtonAppBar(props) {
         <Toolbar>
           <h1 className="app_logo">Tabify</h1>
           <img src="tabify_logo.png" />
-          {playing && (
+          {musicConnected && (
             <FormGroup>
               <FormControlLabel
                 onChange={toggleAutoScroll}
