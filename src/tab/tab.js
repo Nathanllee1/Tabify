@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, forwardRef, useRef, useImperativeHandle } from "react";
 import parse from "html-react-parser";
 import DOMPurify from "dompurify";
 
@@ -10,12 +10,14 @@ const useStyles = makeStyles({
     fontSize: "medium",
     fontWeight: "bold",
     width: "auto",
+    height: "65vh",
+    position: "sticky",
     overflowWrap: "anywhere",
+    overflowY: "scroll",
     boxShadow: "0px 4px 4px 0px #00000040",
     borderRadius: "15px",
     backgroundColor: "white",
     padding: "60px",
-    width: "100%",
   },
   tabLink: {
     backgroundColor: "#ffc600",
@@ -34,13 +36,12 @@ const track = {
   artists: [{ name: "" }],
 };
 
-function Tab(props) {
-  const { track } = props;
+const Tab = forwardRef((props, ref) => {
+  const { track, setTabFetched } = props;
 
   const [currentTrack, setCurrentTrack] = useState(null);
   const [tabHTML, setTabHTML] = useState("");
   const [tabURL, setTabURL] = useState("");
-
   const classes = useStyles();
 
   function cleanHTML(rawHTML) {
@@ -50,13 +51,8 @@ function Tab(props) {
     setTabHTML(html);
   } 
 
-
-
-
-
   useEffect(() => {
     async function getTab() {
-
       if (track) {
         console.log("Fetching ", `https://tabify-scraper.herokuapp.com/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`)
         const response = await fetch(`https://tabify-scraper.herokuapp.com/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`);
@@ -64,26 +60,23 @@ function Tab(props) {
   
         cleanHTML(json.TAB);
       }
-      
     }
+    setTabFetched(false);
     getTab();
+    setTabFetched(true);
     setCurrentTrack(track);
   }, [props.track]);
 
   return (
-    <div>
-
-      <div className={classes.tab}>
-        {tabURL &&
+    <div ref={ref}>
+      {tabURL &&
         <div className={classes.tabLink}>
           <a href={tabURL} target="_blank" style={{color:"white", textDecoration: "none"}}>View on Ultimate Guitar</a>
-        </div>
-          
+        </div>   
         }
         {parse(tabHTML)}
-      </div>
     </div>
   );
-}
+});
 
 export default Tab;

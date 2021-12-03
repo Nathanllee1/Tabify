@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import PauseCircleFilledIcon from "@mui/icons-material/PauseCircleFilled";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import { makeStyles } from "@material-ui/core/styles";
-import { mergeClasses, StylesContext } from "@material-ui/styles";
 import Tab from "./tab/tab.js";
 import "./progress.css";
 
@@ -14,26 +13,40 @@ const useStyles = makeStyles({
   },
   container: {
     display: "flex",
+    position: "sticky",
+    overflowY: "hidden",
     justifyContent: "center",
     gap: "10%",
     flexWrap: "wrap",
   },
   controls: {
-    marginTop: "1em",
     boxShadow: "0px 4px 4px 0px #00000040",
     padding: "30px",
-    height: "min-content;",
+    height: "min-content",
     borderRadius: "15px",
-    position: "sticky",
     alignSelf: "flex-start",
-    top: "10%",
     width: "20%",
     backgroundColor: "white",
+    position: "sticky",
   },
   song_title: {},
   picture_container: {
     display: "flex",
     justifyContent: "center",
+  },
+  tab: {
+    textAlign: "left",
+    fontSize: "medium",
+    fontWeight: "bold",
+    width: "auto",
+    height: "65vh",
+    position: "sticky",
+    overflowWrap: "anywhere",
+    overflowY: "scroll",
+    boxShadow: "0px 4px 4px 0px #00000040",
+    borderRadius: "15px",
+    backgroundColor: "white",
+    padding: "60px",
   },
 });
 
@@ -46,16 +59,20 @@ const track = {
 };
 
 function WebPlayback(props) {
+  const { setMusicConnected, token, autoScroll } = props;
+
   const [is_paused, setPaused] = useState(false);
   const [is_active, setActive] = useState(false);
   const [player, setPlayer] = useState(undefined);
   const [current_track, setTrack] = useState(track);
   const [position, setPosition] = useState(0);
   const [currentDuration, setCurrentDuration] = useState(0);
-
   const [history, add_history] = useState([]);
+  const [tabFetched, setTabFetched] = useState(false);
 
   const classes = useStyles();
+  const tabRef = useRef();
+  const containerRef = useRef();
 
   const [steady_track, set_steady_track] = useState();
 
@@ -85,13 +102,12 @@ function WebPlayback(props) {
       const player = new window.Spotify.Player({
         name: "Tabify",
         getOAuthToken: (cb) => {
-          cb(props.token);
+          cb(token);
         },
         volume: 0.5,
       });
 
       setPlayer(player);
-      console.log(player.dur);
 
       player.addListener("ready", ({ device_id }) => {
         console.log("Ready with Device ID", device_id);
@@ -111,7 +127,13 @@ function WebPlayback(props) {
         setPaused(state.paused);
         setPosition(state.position); // update position if song is paused
         player.getCurrentState().then((state) => {
-          !state ? setActive(false) : setActive(true);
+          if (!state) {
+            setActive(false);
+            setMusicConnected(false);
+          } else {
+            setActive(true);
+            setMusicConnected(true);
+          }
         });
       });
 
@@ -119,9 +141,23 @@ function WebPlayback(props) {
     };
   }, []);
 
+  useEffect(() => {
+    //window.addEventListener("scroll", turnOffAutoScroll);
+  }, []);
+
   const timer = () => {
     var interval = setInterval(() => {
       if (is_active && !is_paused) {
+        if (autoScroll) {
+          console.log(tabRef.current.offsetHeight);
+          console.log((position / currentDuration) * tabRef.current.offsetHeight);
+          containerRef.current.scrollTo({
+            top:
+              (position / currentDuration) * tabRef.current.offsetHeight,
+            left: 0,
+            behavior: "smooth",
+          });
+        }
         setPosition((position) => position + 100);
       }
       clearInterval(interval);
@@ -136,87 +172,88 @@ function WebPlayback(props) {
 
   if (!is_active) {
     return (
-      <>
-        <div className="container">
-          <div className="main-wrapper">
-            To get started, open your Spotify app and select{" "}
-            <em style={{ color: "#1dd760" }}>Tabify</em> as your Spotify player
-            <br />
-            <br />
-            <br />
-            <div className={classes.picture_container}>
-              <div>
-                <br />
-                <h2>Desktop</h2>
-                <img src="device_tabify.png" style={{ width: "70%" }} />
-              </div>
+      <div className={classes.app_container}>
+        <div className="main-wrapper">
+          To get started, open your Spotify app and select{" "}
+          <em style={{ color: "#1dd760" }}>Tabify</em> as your Spotify player
+          <br />
+          <br />
+          <br />
+          <div className={classes.picture_container}>
+            <div>
+              <br />
+              <h2>Desktop</h2>
+              <img src="device_tabify.png" style={{ width: "70%" }} />
+            </div>
 
-              <div>
-                <br />
-                <h2>Mobile</h2>
-                <img src="mobile_1.jpg" style={{ width: "50%" }} /> <br />{" "}
-                <br />
-                <img src="mobile_2.jpg" style={{ width: "50%" }} />
-              </div>
+            <div>
+              <br />
+              <h2>Mobile</h2>
+              <img src="mobile_1.jpg" style={{ width: "50%" }} /> <br /> <br />
+              <img src="mobile_2.jpg" style={{ width: "50%" }} />
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   } else {
     return (
-      <>
-        <div className={classes.container}>
-          <div className={classes.controls}>
-            <img
-              src={current_track.album.images[0].url}
-              className={classes.cover}
-              alt=""
+      <div className={classes.container}>
+        <div className={classes.controls}>
+          <img
+            src={current_track.album.images[0].url}
+            className={classes.cover}
+            alt=""
+          />
+          <div className="now-playing__side">
+            <br />
+            <h2 className={classes.song_title}>{current_track.name}</h2>
+            <h3 className="now-playing__artist">
+              {current_track.artists[0].name}
+            </h3>
+            <br />
+            <SkipPreviousIcon
+              onClick={() => {
+                player.previousTrack();
+              }}
             />
-            <div className="now-playing__side">
-              <br />
-              <h2 className={classes.song_title}>{current_track.name}</h2>
-              <h3 className="now-playing__artist">
-                {current_track.artists[0].name}
-              </h3>
-              <br />
-              <SkipPreviousIcon
+            {is_paused ? (
+              <PlayCircleFilledIcon
                 onClick={() => {
-                  player.previousTrack();
+                  player.togglePlay();
                 }}
               />
-              {is_paused ? (
-                <PlayCircleFilledIcon
-                  onClick={() => {
-                    player.togglePlay();
-                  }}
-                />
-              ) : (
-                <PauseCircleFilledIcon
-                  onClick={() => {
-                    player.togglePlay();
-                  }}
-                />
-              )}
-              <SkipNextIcon
+            ) : (
+              <PauseCircleFilledIcon
                 onClick={() => {
-                  player.nextTrack();
+                  player.togglePlay();
                 }}
               />
-              <div className="demo-wrapper html5-progress-bar">
-                <div className="progress-bar-wrapper">
-                  <progress
-                    id="progressbar"
-                    value={position}
-                    max={currentDuration}
-                  ></progress>
-                </div>
+            )}
+            <SkipNextIcon
+              onClick={() => {
+                player.nextTrack();
+              }}
+            />
+            <div className="demo-wrapper html5-progress-bar">
+              <div className="progress-bar-wrapper">
+                <progress
+                  id="progressbar"
+                  value={position}
+                  max={currentDuration}
+                ></progress>
               </div>
             </div>
           </div>
-          <Tab track={steady_track} />
         </div>
-      </>
+        <div ref={containerRef} className={classes.tab}>
+          <Tab
+            setTabFetched={setTabFetched}
+            ref={tabRef}
+            track={steady_track}
+          />
+        </div>
+      </div>
     );
   }
 }
