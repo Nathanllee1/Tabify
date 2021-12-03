@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef } from "react";
+import React, { useState, useEffect, forwardRef, useRef, useImperativeHandle } from "react";
 import parse from "html-react-parser";
 import DOMPurify from "dompurify";
 
@@ -11,6 +11,7 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     width: "auto",
     height: "65vh",
+    position: "sticky",
     overflowWrap: "anywhere",
     overflowY: "scroll",
     boxShadow: "0px 4px 4px 0px #00000040",
@@ -34,7 +35,6 @@ const Tab = forwardRef((props, ref) => {
   const [currentTrack, setCurrentTrack] = useState(null);
   const [tabHTML, setTabHTML] = useState("");
 
-  const classes = useStyles();
 
   function cleanHTML(rawHTML) {
     const html = DOMPurify.sanitize(rawHTML, {
@@ -61,7 +61,7 @@ const Tab = forwardRef((props, ref) => {
   }, [props.track]);
 
   return (
-      <div className={classes.tab} ref={ref}>{parse(tabHTML)}</div>
+      <div ref={ref}>{parse(tabHTML)}</div>
   );
 });
 

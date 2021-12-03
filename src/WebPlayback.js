@@ -27,11 +27,26 @@ const useStyles = makeStyles({
     alignSelf: "flex-start",
     width: "20%",
     backgroundColor: "white",
+    position: "sticky",
   },
   song_title: {},
   picture_container: {
     display: "flex",
     justifyContent: "center",
+  },
+  tab: {
+    textAlign: "left",
+    fontSize: "medium",
+    fontWeight: "bold",
+    width: "auto",
+    height: "65vh",
+    position: "sticky",
+    overflowWrap: "anywhere",
+    overflowY: "scroll",
+    boxShadow: "0px 4px 4px 0px #00000040",
+    borderRadius: "15px",
+    backgroundColor: "white",
+    padding: "60px",
   },
 });
 
@@ -56,7 +71,8 @@ function WebPlayback(props) {
   const [tabFetched, setTabFetched] = useState(false);
 
   const classes = useStyles();
-  const tabRef = useRef(null);
+  const tabRef = useRef();
+  const containerRef = useRef();
 
   useEffect(() => {
     if (history[history.length - 1] !== current_track.name) {
@@ -143,8 +159,11 @@ function WebPlayback(props) {
     var interval = setInterval(() => {
       if (is_active && !is_paused) {
         if (autoScroll) {
-          tabRef.current.scrollTo({
-            top: (position / currentDuration) * tabRef.current.offsetHeight,
+          console.log(tabRef.current.offsetHeight);
+          console.log((position / currentDuration) * tabRef.current.offsetHeight);
+          containerRef.current.scrollTo({
+            top:
+              (position / currentDuration) * tabRef.current.offsetHeight,
             left: 0,
             behavior: "smooth",
           });
@@ -237,7 +256,13 @@ function WebPlayback(props) {
             </div>
           </div>
         </div>
-        <Tab setTabFetched={setTabFetched} ref={tabRef} track={current_track} />
+        <div ref={containerRef} className={classes.tab}>
+          <Tab
+            setTabFetched={setTabFetched}
+            ref={tabRef}
+            track={current_track}
+          />
+        </div>
       </div>
     );
   }
