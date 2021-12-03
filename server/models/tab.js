@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 const TabSchema = new mongoose.Schema(
   {
-    id: {
+    TAB: {
       type: String,
       required: true,
     },
-    // TODO: implement history with tab pref
+    URL: String
   },
   { collection: "tabs_list" }
 );
