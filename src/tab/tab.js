@@ -19,6 +19,13 @@ const useStyles = makeStyles({
     backgroundColor: "white",
     padding: "60px",
   },
+  tabLink: {
+    backgroundColor: "#ffc600",
+    color: "",
+    padding: "20px",
+    display: "inline-block",
+    borderRadius: "99px",
+  }
 });
 
 const track = {
@@ -34,6 +41,7 @@ const Tab = forwardRef((props, ref) => {
 
   const [currentTrack, setCurrentTrack] = useState(null);
   const [tabHTML, setTabHTML] = useState("");
+  const [tabURL, setTabURL] = useState("");
 
 
   function cleanHTML(rawHTML) {
@@ -41,18 +49,17 @@ const Tab = forwardRef((props, ref) => {
       USE_PROFILES: { html: true },
     });
     setTabHTML(html);
-  }
+  } 
 
   useEffect(() => {
     async function getTab() {
-      //    console.log("Fetching ", `https://tabify-scraper.herokuapp.com/api/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`)
-      const response = await fetch(
-        `https://tabify-scraper.herokuapp.com/gettab?song_name=${encodeURIComponent(
-          track.name
-        )}&artist_name=${encodeURIComponent(track.artists[0].name)}`
-      );
-      const json = await response.json();
-      cleanHTML(json.TAB);
+      if (track) {
+        console.log("Fetching ", `https://tabify-scraper.herokuapp.com/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`)
+        const response = await fetch(`https://tabify-scraper.herokuapp.com/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`);
+        const json = await response.json();
+  
+        cleanHTML(json.TAB);
+      }
     }
     setTabFetched(false);
     getTab();
@@ -61,7 +68,14 @@ const Tab = forwardRef((props, ref) => {
   }, [props.track]);
 
   return (
-      <div ref={ref}>{parse(tabHTML)}</div>
+    <div ref={ref}>
+      {tabURL &&
+        <div className={classes.tabLink}>
+          <a href={tabURL} target="_blank" style={{color:"white", textDecoration: "none"}}>View on Ultimate Guitar</a>
+        </div>   
+        }
+        {parse(tabHTML)}
+    </div>
   );
 });
 
