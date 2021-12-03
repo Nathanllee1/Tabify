@@ -42,7 +42,7 @@ const Tab = forwardRef((props, ref) => {
   const [currentTrack, setCurrentTrack] = useState(null);
   const [tabHTML, setTabHTML] = useState("");
   const [tabURL, setTabURL] = useState("");
-
+  const classes = useStyles();
 
   function cleanHTML(rawHTML) {
     const html = DOMPurify.sanitize(rawHTML, {
