@@ -77,16 +77,10 @@ app.get("/auth/callback", (req, res) => {
   });
 });
 
-app.listen(process.env.PORT || port, () => {
-  console.log("REST API is listening. on", port);
-});
-
-app.use(express.static(path.join(__dirname, "../build")));
-
 // TODO fetch songs from ultimate guitar
-app.get("/gettabs", async (req, res) => {
-  let artist = req.query.artist;
-  let name = req.query.name;
+app.get("/api/gettab", async (req, res) => {
+  let artist = req.query.song_name;
+  let name = req.query.artist_name;
 
   console.log("Fetching tabs for ", artist, name);
 
@@ -98,7 +92,13 @@ app.get("/gettabs", async (req, res) => {
   // if not, fetch from scraper
 
   request.get(`https://tabify-scraper.herokuapp.com/gettab?artist_name=${encodeURIComponent(artist)}&song_name=${encodeURIComponent(name)}`, function (error, response, body) {
-    console.log(JSON.parse(body));
+    res.json(JSON.parse(body));
   })
   
 });
+
+app.listen(process.env.PORT || port, () => {
+  console.log("REST API is listening. on", port);
+});
+
+app.use(express.static(path.join(__dirname, "../build")));
