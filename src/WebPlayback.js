@@ -133,7 +133,6 @@ function WebPlayback(props) {
   const timer = () => {
     var interval = setInterval(() => {
       if (is_active && !is_paused) {
-        console.log(position);
         setPosition((position) => position + 100);
       }
       clearInterval(interval);
