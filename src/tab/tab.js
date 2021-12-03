@@ -58,8 +58,8 @@ function Tab(props) {
     async function getTab() {
 
       if (track) {
-        console.log("Fetching ", `https://tabify-scraper.herokuapp.com/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`)
-        const response = await fetch(`https://tabify-scraper.herokuapp.com/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`);
+        console.log("Fetching ", `/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`)
+        const response = await fetch(`/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`);
         const json = await response.json();
   
         cleanHTML(json.TAB);
