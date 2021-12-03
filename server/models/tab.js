@@ -8,7 +8,7 @@ const TabSchema = new mongoose.Schema(
     },
     // TODO: implement history with tab pref
   },
-  { collection: "users_list" }
+  { collection: "tabs_list" }
 );
 
 const Tab = mongoose.model("Tab", TabSchema);
