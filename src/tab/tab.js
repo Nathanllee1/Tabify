@@ -17,6 +17,13 @@ const useStyles = makeStyles({
     padding: "60px",
     width: "100%",
   },
+  tabLink: {
+    backgroundColor: "#ffc600",
+    color: "",
+    padding: "20px",
+    display: "inline-block",
+    borderRadius: "99px",
+  }
 });
 
 const track = {
@@ -32,6 +39,7 @@ function Tab(props) {
 
   const [currentTrack, setCurrentTrack] = useState(null);
   const [tabHTML, setTabHTML] = useState("");
+  const [tabURL, setTabURL] = useState("");
 
   const classes = useStyles();
 
@@ -41,6 +49,8 @@ function Tab(props) {
     });
     setTabHTML(html);
   } 
+
+
 
   useEffect(() => {
     async function getTab() {
@@ -60,7 +70,16 @@ function Tab(props) {
 
   return (
     <div>
-      <div className={classes.tab}>{parse(tabHTML)}</div>
+
+      <div className={classes.tab}>
+        {tabURL &&
+        <div className={classes.tabLink}>
+          <a href={tabURL} target="_blank" style={{color:"white", textDecoration: "none"}}>View on Ultimate Guitar</a>
+        </div>
+          
+        }
+        {parse(tabHTML)}
+      </div>
     </div>
   );
 }
