@@ -57,9 +57,20 @@ function WebPlayback(props) {
 
   const classes = useStyles();
 
+  const [steady_track, set_steady_track] = useState();
+
   useEffect(() => {
-    if (history[history.length - 1] !== current_track.name) {
+    // edge case of first song
+    if (history.length == 0)
       add_history([...history, current_track]);
+
+    else if (history[history.length - 1].name !== current_track.name) {
+      add_history([...history, current_track]);
+
+      set_steady_track(current_track);
+
+      console.log("Switching track to", steady_track);
+      
     }
   }, [current_track]);
 
@@ -84,27 +95,6 @@ function WebPlayback(props) {
 
       player.addListener("ready", ({ device_id }) => {
         console.log("Ready with Device ID", device_id);
-        /*
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer " + props.token);
-        myHeaders.append("Content-Type", "text/plain");
-
-        console.log(myHeaders.Authorization);
-
-        var raw = '{\n  "device_ids": [\n    "' + device_id + '"\n  ]\n}';
-
-        var requestOptions = {
-          method: "PUT",
-          headers: myHeaders,
-          body: raw,
-          redirect: "follow",
-        };
-
-        fetch("https://api.spotify.com/v1/me/player", requestOptions)
-          .then(response => response.text())
-          .then(result => console.log(result))
-          .catch(error => console.log('error', error));
-          */
       });
 
       player.addListener("not_ready", ({ device_id }) => {
@@ -120,7 +110,6 @@ function WebPlayback(props) {
 
         setPaused(state.paused);
         setPosition(state.position); // update position if song is paused
-        console.log("position changed " + state.position);
         player.getCurrentState().then((state) => {
           !state ? setActive(false) : setActive(true);
         });
@@ -133,7 +122,6 @@ function WebPlayback(props) {
   const timer = () => {
     var interval = setInterval(() => {
       if (is_active && !is_paused) {
-        console.log(position);
         setPosition((position) => position + 100);
       }
       clearInterval(interval);
@@ -226,7 +214,7 @@ function WebPlayback(props) {
               </div>
             </div>
           </div>
-          <Tab track={current_track} />
+          <Tab track={steady_track} />
         </div>
       </>
     );
