@@ -1,4 +1,3 @@
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import { styled } from "@mui/system";
@@ -13,12 +12,6 @@ const THEME = createTheme({
     fontFamily: ` source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace`,
   },
 });
-
-const StyledNav = styled(AppBar)`
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: none;
-  color: black;
-`;
 
 const StyledSwitch = styled(Switch)`
   color: "#1db954";
@@ -39,7 +32,6 @@ export default function ButtonAppBar(props) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <StyledNav>
         <Toolbar>
           <h1 className="app_logo">Tabify</h1>
           <Icon />
@@ -57,7 +49,6 @@ export default function ButtonAppBar(props) {
             </StyledForm>
           )}
         </Toolbar>
-      </StyledNav>
     </Box>
   );
 }
