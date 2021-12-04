@@ -19,6 +19,4 @@ const TabSchema = new mongoose.Schema(
   { collection: "tabs_list" }
 );
 
-const Tab = mongoose.model("Tab", TabSchema);
-
-module.exports = Tab;
+module.exports = TabSchema;
