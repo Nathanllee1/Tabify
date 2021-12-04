@@ -19,6 +19,6 @@ const TabSchema = new mongoose.Schema(
   { collection: "tabs_list" }
 );
 
-tabSchema.index({ "song_title": 1, "artist": 1}, { "unique": true })
+TabSchema.index({ "song_title": 1, "artist": 1}, { "unique": true })
 
 module.exports = TabSchema;
