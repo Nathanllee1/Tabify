@@ -13,8 +13,7 @@ const useStyles = makeStyles({
   app_container: {
     textAlign: "center",
     align : "center",
-    marginTop: "10%",
-    height: "75%",
+    marginTop: "5%",
     display: "block",
   },
 });

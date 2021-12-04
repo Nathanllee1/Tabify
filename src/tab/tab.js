@@ -44,21 +44,27 @@ const Tab = forwardRef((props, ref) => {
   const [tabURL, setTabURL] = useState("");
   const classes = useStyles();
 
+  const [loading, setLoading] = useState(false);
+
   function cleanHTML(rawHTML) {
     const html = DOMPurify.sanitize(rawHTML, {
       USE_PROFILES: { html: true },
     });
     setTabHTML(html);
+    
   } 
 
   useEffect(() => {
     async function getTab() {
       if (track) {
+        setTabHTML("");
+        setLoading(true);
         console.log("Fetching ", `/api/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`)
         const response = await fetch(`/api/gettab?song_name=${encodeURIComponent(track.name)}&artist_name=${encodeURIComponent(track.artists[0].name)}`);
         const json = await response.json();
-  
+        setTabURL(json.URL);
         cleanHTML(json.TAB);
+        setLoading(false);
       }
     }
     setTabFetched(false);
@@ -68,13 +74,20 @@ const Tab = forwardRef((props, ref) => {
   }, [props.track]);
 
   return (
+    
     <div ref={ref}>
-      {tabURL &&
+      {tabURL && !loading &&
         <div className={classes.tabLink}>
           <a href={tabURL} target="_blank" style={{color:"white", textDecoration: "none"}}>View on Ultimate Guitar</a>
         </div>   
-        }
-        {parse(tabHTML)}
+        
+      }
+      {parse(tabHTML)}
+
+      {loading &&
+        <div>Loading...</div>
+      }
+        
     </div>
   );
 });
