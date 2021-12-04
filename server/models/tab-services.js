@@ -57,7 +57,6 @@ async function addTab(title, artist, tabHtml) {
     }
 }
 
-// somewhat spaghetti code, but leaves space for feature expansion later on
 async function getTabByTitleAndArtist(title, artist) {
     const tabModel = getConnection().model("Tab", TabSchema);
     return await tabModel.find({"song_title": title, "artist": artist});
