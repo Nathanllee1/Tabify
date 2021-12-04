@@ -6,12 +6,6 @@ import "./App.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Navbar from "./Navbar";
 
-const THEME = createTheme({
-  typography: {
-    fontFamily: `Menlo, Monaco, Consolas, "Courier New", monospace`,
-  },
-});
-
 const useStyles = makeStyles({
   container: {
     height: "100vh",
@@ -22,6 +16,12 @@ const useStyles = makeStyles({
     marginTop: "10%",
     height: "75%",
     display: "block",
+  },
+});
+
+const THEME = createTheme({
+  typography: {
+    fontFamily: `source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace`,
   },
 });
 
