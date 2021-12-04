@@ -62,5 +62,6 @@ async function getTabByTitleAndArtist(title, artist) {
     return await tabModel.find({"song_title": title, "artist": artist});
 }
 
+exports.setConnection = setConnection;
 exports.addTab = addTab;
 exports.getTabByTitleAndArtist = getTabByTitleAndArtist;

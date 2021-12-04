@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const TabSchema = require("./tab");
-const tabServices = require("./tab-services");
+const tabServices = require("./tab-services.js");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 
 let mongoServer;
@@ -64,7 +64,7 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
-    await userModel.deleteMany();
+    await tabModel.deleteMany();
 });
 
 test("Fetch tab by title and artist", async () => {
@@ -85,7 +85,7 @@ test("Adding tab", async () => {
       tab: "some other another other tab"
     };
 
-    const result = await tabServices.addTab(dummyTab);
+    const result = await tabServices.addTab(dummyTab.song_title, dummyTab.artist, dummyTab.tab);
     expect(result).toBeTruthy();
     expect(result.song_title).toBe(dummyTab.song_title);
     expect(result.artist).toBe(dummyTab.artist);
