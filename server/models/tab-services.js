@@ -37,14 +37,6 @@ function getConnection() {
     return conn;
 }
 
-// mongoose.connect(
-//     `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PWD}@cluster0.tnew1.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`,
-//     {
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true
-//     }
-// ).catch(error => console.log(error));
-
 async function addTab(title, artist, tabHtml) {
     const tabModel = getConnection().model("Tab", TabSchema);
     try {
