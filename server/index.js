@@ -79,8 +79,8 @@ app.get("/auth/callback", (req, res) => {
 
 // TODO fetch songs from ultimate guitar
 app.get("/api/gettab", async (req, res) => {
-  let artist = req.query.song_name;
-  let name = req.query.artist_name;
+  let name = req.query.song_name;
+  let artist = req.query.artist_name;
 
   console.log("Fetching tabs for ", artist, name);
 
