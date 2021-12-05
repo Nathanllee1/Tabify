@@ -28,6 +28,15 @@ npm run prod
 
 ## Architecture Diagrams
 
+### Class Diagram
+
+<img width="506" alt="Screen Shot 2021-10-22 at 2 37 30 PM" src="https://user-images.githubusercontent.com/70536670/144730465-bcded3c1-1a06-4a6b-88ce-dd9acef81d26.png">
+
+### Component/Deployment Diagram
+
+![Component Diagram drawio](https://user-images.githubusercontent.com/70536670/144730525-edaca622-91f0-4627-92f6-40d6fa46fbdc.png)
+
+
 ## Code Coverage
 
 ## Style Check
