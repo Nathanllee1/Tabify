@@ -9,7 +9,7 @@ import "./progress.css";
 
 const useStyles = makeStyles({
   cover: {
-    maxWidth: "100%",
+    maxWidth: "80%",
   },
   container: {
     display: "flex",
@@ -28,26 +28,35 @@ const useStyles = makeStyles({
     width: "20%",
     backgroundColor: "white",
     position: "sticky",
+    minWidth: "350px",
+    marginBottom: "20px",
   },
   song_title: {},
   picture_container: {
     display: "flex",
     justifyContent: "center",
   },
+  device_container: {
+    width: "fit-content"
+  },
   tab: {
     textAlign: "left",
     fontSize: "medium",
     fontWeight: "bold",
-    width: "auto",
-    height: "65vh",
+    width: "50%",
+    minWidth: "350px",
+    height: "55vh",
     position: "sticky",
     overflowWrap: "anywhere",
-    overflowY: "scroll",
+    overflowY: "auto",
     boxShadow: "0px 4px 4px 0px #00000040",
     borderRadius: "15px",
     backgroundColor: "white",
     padding: "60px",
+    marginBottom: "20px",
+    marginTop: "1px",
   },
+
 });
 
 const track = {
@@ -173,24 +182,24 @@ function WebPlayback(props) {
   if (!is_active) {
     return (
       <div className={classes.app_container}>
-        <div className="main-wrapper">
+        <div className={classes.tutorial}>
           To get started, open your Spotify app and select{" "}
           <em style={{ color: "#1dd760" }}>Tabify</em> as your Spotify player
           <br />
           <br />
           <br />
           <div className={classes.picture_container}>
-            <div>
+            <div className={classes.device_container}>
               <br />
               <h2>Desktop</h2>
-              <img src="device_tabify.png" style={{ width: "70%" }} />
+              <img src="device_tabify.png" style={{ width: "50%" }} />
             </div>
 
-            <div>
+            <div className={classes.device_container}>
               <br />
               <h2>Mobile</h2>
-              <img src="mobile_1.jpg" style={{ width: "50%" }} /> <br /> <br />
-              <img src="mobile_2.jpg" style={{ width: "50%" }} />
+              <img src="mobile_1.jpg" style={{ width: "40%" }} /> <br /> <br />
+              <img src="mobile_2.jpg" style={{ width: "40%" }} />
             </div>
           </div>
         </div>
