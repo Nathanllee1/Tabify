@@ -6,7 +6,7 @@ const useStyles = makeStyles({
   login: {
     color: "black",
     display: "grid",
-    verticalAlign: "center",
+    verticalAlign: "middle",
     placeItems: "center",
     alignContent: "center",
     backgroundColor: "white",

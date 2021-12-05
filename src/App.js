@@ -1,32 +1,38 @@
 import React, { useState, useEffect } from "react";
 import WebPlayback from "./WebPlayback";
 import Login from "./Login";
+import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import "./App.css";
-
 import { makeStyles } from "@material-ui/core/styles";
+import Navbar from "./Navbar";
 
 const useStyles = makeStyles({
-  logo_container: {
-    display: "flex",
-    margin: "2%",
-    alignItems: "center",
-    gap: "5px",
-    height: "15%",
+  container: {
+    height: "100vh",
   },
   app_container: {
     textAlign: "center",
-    marginTop: "2%",
-    height: "75%",
+    align : "center",
+    marginTop: "5%",
     display: "block",
   },
 });
 
+const THEME = createTheme({
+  typography: {
+    fontFamily: `source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace`,
+  },
+});
+
 function App() {
-  const classes = useStyles();
   const [token, setToken] = useState("");
+  // Whether or not tabify is synced up with user's spotify music
+  const [musicConnected, setMusicConnected] = useState(false);
+  // Whether autoscroll is enabled
+  const [autoScroll, setAutoScroll] = useState(false);
+  const classes = useStyles();
 
   useEffect(() => {
-    console.log(window.location.search);
     const urlParams = new URLSearchParams(window.location.search);
     let tok = urlParams.get("token");
     if (tok) {
@@ -35,14 +41,25 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <div className={classes.logo_container}>
-        <h1 className="app_logo">Tabify</h1>
-        <img src="tabify_logo.png" />
-      </div>
-      <div className={classes.app_container}>
-        <>{token === "" ? <Login /> : <WebPlayback token={token} />}</>
-      </div>
+    <div className={classes.container}>
+      <MuiThemeProvider theme={THEME}>
+        <Navbar
+          musicConnected={musicConnected}
+          autoScroll={autoScroll}
+          setAutoScroll={setAutoScroll}
+        />
+        <div className={classes.app_container}>
+          {token === "" ? (
+            <Login />
+          ) : (
+            <WebPlayback
+              token={token}
+              setMusicConnected={setMusicConnected}
+              autoScroll={autoScroll}
+            />
+          )}
+        </div>
+      </MuiThemeProvider>
     </div>
   );
 }
