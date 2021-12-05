@@ -87,9 +87,12 @@ app.get("/api/gettab", async (req, res) => {
 
   // TODO: check if tab is in database
 
+  let tab = tabServices.getTabByTitleAndArtist(name, artist);
+
   // if tab is in database, return tab
 
-
+  if (tab)
+    return res.json(tab.tab);
   // if not, fetch from scraper
 
   request.get(`https://tabify-scraper.herokuapp.com/gettab?artist_name=${encodeURIComponent(artist)}&song_name=${encodeURIComponent(name)}`, function (error, response, body) {
