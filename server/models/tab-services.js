@@ -19,7 +19,7 @@ function getConnection() {
                 process.env.MONGO_USER +
                 ":" +
                 process.env.MONGO_PWD +
-                "@csc307.7ijdm.mongodb.net/" +
+                "cluster0.tnew1.mongodb.net/" +
                 process.env.MONGO_DB +
                 "?retryWrites=true&w=majority",
             {
