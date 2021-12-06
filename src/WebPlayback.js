@@ -45,7 +45,7 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     width: "50%",
     minWidth: "350px",
-    height: "55vh",
+    height: "65vh",
     position: "sticky",
     overflowWrap: "anywhere",
     overflowY: "auto",

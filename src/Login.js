@@ -9,7 +9,6 @@ const useStyles = makeStyles({
     verticalAlign: "middle",
     placeItems: "center",
     alignContent: "center",
-    backgroundColor: "white",
 
     "& a": {
       padding: "20px",
@@ -18,6 +17,7 @@ const useStyles = makeStyles({
       fontWeight: 600,
       color: "white",
       textDecoration: "none",
+
     },
 
     "& a:hover": {
@@ -39,17 +39,31 @@ const useStyles = makeStyles({
       content: "/Spotify_Icon_RGB_Green.png",
     },
   },
+  "login_container": {
+    boxShadow: "0px 4px 4px 0px #00000040",
+    padding: "30px",
+    borderRadius: "15px",
+    alignSelf: "flex-start",
+    width: "40%",
+    backgroundColor: "white",
+    position: "sticky",
+    minWidth: "350px",
+    marginBottom: "20px",
+  }
 });
 function Login() {
   const classes = useStyles();
 
   return (
     <div className={classes.login}>
-      <h1>Tabify</h1>
-      <a href="/auth/login">
-        <img src="/Spotify_Icon_RGB_White.png" />
-        LOGIN WITH SPOTIFY
-      </a>
+      <div className={classes.login_container}>
+        <h1>Tabify</h1>
+        <a href="/auth/login">
+          <img src="/Spotify_Icon_RGB_White.png" />
+          LOGIN WITH SPOTIFY
+        </a>
+      </div>
+
     </div>
   );
 }
