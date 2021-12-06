@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: npm install
+      - run: npm install --only=prod
       - run: npm test
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
