@@ -3,7 +3,8 @@ const request = require("request");
 const dotenv = require("dotenv");
 const fs = require("fs").promises;
 const path = require("path");
-const tabServices = require("./tab-services.js")
+const tabServices = require("./models/tab-services.js");
+const { type } = require("os");
 
 const port = 5000;
 
@@ -87,17 +88,26 @@ app.get("/api/gettab", async (req, res) => {
 
   // TODO: check if tab is in database
 
-  let tab = tabServices.getTabByTitleAndArtist(name, artist);
+  let tab = await tabServices.getTabByTitleAndArtist(name, artist);
 
   // if tab is in database, return tab
 
-  if (tab)
-    return res.json(tab.tab);
+  if (tab.length !== 0) {
+    tab = tab[0];
+    res.json(
+      {
+        "TAB": tab.tab,
+        "URL": tab.url
+      });
+  }
   // if not, fetch from scraper
-
-  request.get(`https://tabify-scraper.herokuapp.com/gettab?artist_name=${encodeURIComponent(artist)}&song_name=${encodeURIComponent(name)}`, function (error, response, body) {
-    res.json(JSON.parse(body));
-  })
+  else {
+    request.get(`https://tabify-scraper.herokuapp.com/gettab?artist_name=${encodeURIComponent(artist)}&song_name=${encodeURIComponent(name)}`, function (error, response, body) {
+      let tabHtml = JSON.parse(body);
+      res.json(tabHtml);
+      tabServices.addTab(name, artist, tabHtml.TAB, tabHtml.URL);
+    });
+  }
   
 });
 

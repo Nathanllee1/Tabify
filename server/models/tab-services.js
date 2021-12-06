@@ -19,7 +19,7 @@ function getConnection() {
                 process.env.MONGO_USER +
                 ":" +
                 process.env.MONGO_PWD +
-                "cluster0.tnew1.mongodb.net/" +
+                "myFirstDatabase.tnew1.mongodb.net/" +
                 process.env.MONGO_DB +
                 "?retryWrites=true&w=majority",
             {

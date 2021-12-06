@@ -11,14 +11,12 @@ const TabSchema = new mongoose.Schema(
       required: true
     },
     tab: {
-      TAB: {
-        type: String,
-        required: true
-      },
-      URL: {
-        type: String,
-        required: true
-      },
+      type: String,
+      required: true
+    },
+    url: {
+      type: String,
+      required: true
     },
   },
   { collection: "tabs_list" }
