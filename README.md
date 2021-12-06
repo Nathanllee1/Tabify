@@ -1,4 +1,5 @@
 # Tabify
+[![Node.js CI](https://github.com/Nathanllee1/Tabify/actions/workflows/node.js.yml/badge.svg)](https://github.com/Nathanllee1/Tabify/actions/workflows/node.js.yml)
 
 ## Project Description:
 
@@ -39,13 +40,14 @@ npm run prod
 
 ## Code Coverage 12/5/2021 6pm
 
------------------|---------|----------|---------|---------|-------------------
+
 File             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -----------------|---------|----------|---------|---------|-------------------
 All files        |    92.3 |       50 |     100 |    92.3 |                   
  tab-services.js |    90.9 |       50 |     100 |    90.9 | 16-29             
  tab.js          |     100 |      100 |     100 |     100 |                   
------------------|---------|----------|---------|---------|-------------------
+
+
 Test Suites: 1 passed, 1 total
 Tests:       3 passed, 3 total
 Snapshots:   0 total
