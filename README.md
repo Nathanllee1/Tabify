@@ -37,7 +37,19 @@ npm run prod
 ![Component Diagram drawio](https://user-images.githubusercontent.com/70536670/144730525-edaca622-91f0-4627-92f6-40d6fa46fbdc.png)
 
 
-## Code Coverage
+## Code Coverage 12/5/2021 6pm
+
+PASS  ./tab-services.test.js
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |     100 |      100 |     100 |     100 |                          
+ server/models     |     100 |      100 |     100 |     100 |                   
+  tab-services.js  |     100 |      100 |     100 |     100 |                   
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        1.347 s
 
 ## Style Check
 
