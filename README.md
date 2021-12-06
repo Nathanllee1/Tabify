@@ -3,7 +3,7 @@
 
 ## Project Description:
 
-When playing guitar, people put songs on spotify and jam along to them. If they want the tabs to the song, they'll usually google the chords to the song on https://www.ultimate-guitar.com/ which gets in the way of playing guitar. Thats where Tabify comes in! Tabify connects to your spotify account and automatically pulls up the tab of the song currently playing.
+When playing guitar, people put songs on spotify and jam along to them. If they want the tabs to the song, they'll usually google the chords to the song on https://www.ultimate-guitar.com/ which gets in the way of playing guitar. That's where Tabify comes in! Tabify connects to your Spotify account and automatically pulls up the tab of the song currently playing.
 
 
 UI Prototype: https://www.figma.com/file/J7pzVQTY6Wv1YScIYKMDGf/Login-Page?node-id=0%3A1
@@ -53,11 +53,11 @@ Tests:       3 passed, 3 total
 Snapshots:   0 total
 Time:        1.892 s, estimated 3 s
 
-The uncovered lines are databse connection code.
+The uncovered lines are database connection code.
 
 ## Style Check
 
-For this project we're using Prettier as a style checker to ensure our code styles are consistent. To install using npm, you can run the followming commands in the root directory:
+For this project we're using Prettier as a style checker to ensure our code styles are consistent. To install using npm, you can run the following commands in the root directory:
 
 `npm install --save-dev --save-exact prettier`
 
@@ -92,7 +92,7 @@ https://prettier.io/docs/en/editors.html
 ## Technical Details
 ### Authentication
 
-The first part is authentication with Spotify using Oauth 2.0. I’ve done this before and have a reasonable idea how it works.
+The first part is authentication with Spotify using OAuth 2.0. I’ve done this before and have a reasonable idea how it works.
 
 1. The express server redirects the website to the Spotify sign in.
 2. The Spotify sign in page redirects back to the original page and returns tokens.
@@ -109,7 +109,7 @@ https://developer.spotify.com/documentation/web-playback-sdk/guide/
 
 ### Webscraping
 
-Once the website gets the current song playing, it will run a search on Ultimate Guitar and return the results for chords that the user can pick from. Ultimate guitar doesn’t have an API, so we’ll have to implement this manually using a javascript web scraping library.
+Once the website gets the current song playing, it will run a search on Ultimate Guitar and return the results for chords that the user can pick from. Ultimate Guitar doesn’t have an API, so we’ll have to implement this manually using a javascript web scraping library.
 
 We could either do this on the frontend or backend.
 
