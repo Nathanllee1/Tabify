@@ -22,7 +22,7 @@
     "eject": "react-scripts eject",
     "dev": "run-p server start",
     "prod": "node server/index.js --prod",
-    "server": "node server/index.js --prod"
+    "server": "node server/index.js"
   },
   "eslintConfig": {
     "extends": [
