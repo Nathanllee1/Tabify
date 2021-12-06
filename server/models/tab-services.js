@@ -25,7 +25,7 @@ function getConnection() {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
             });
-            
+
         console.log("mongodb+srv://" +
             process.env.MONGO_USER +
             ":" +
@@ -39,14 +39,19 @@ function getConnection() {
 
 async function addTab(title, artist, tabHtml, tabUrl) {
     const tabModel = getConnection().model("Tab", TabSchema);
-    try {
-        const tabToAdd = new tabModel({ "song_title": title, "artist": artist, "tab": tabHtml, "url": tabUrl });
-        const savedTab = await tabToAdd.save()
-        return savedTab;
-    } catch (error) {
-        console.log(error);
-        return false;
+
+    if (tabUrl) {
+        try {
+            const tabToAdd = new tabModel({ "song_title": title, "artist": artist, "tab": tabHtml, "url": tabUrl });
+            const savedTab = await tabToAdd.save()
+            return savedTab;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
     }
+
+    
 }
 
 async function getTabByTitleAndArtist(title, artist) {
