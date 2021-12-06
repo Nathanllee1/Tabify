@@ -6,6 +6,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import Switch from "@mui/material/Switch";
 import Icon from "./Icon";
+import React, { Component }  from 'react';
 
 const THEME = createTheme({
   typography: {
