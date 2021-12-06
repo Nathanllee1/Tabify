@@ -37,10 +37,10 @@ function getConnection() {
     return conn;
 }
 
-async function addTab(title, artist, tabHtml) {
+async function addTab(title, artist, tabHtml, tabUrl) {
     const tabModel = getConnection().model("Tab", TabSchema);
     try {
-        const tabToAdd = new tabModel({"song_title": title, "artist": artist, tab: tabHtml});
+        const tabToAdd = new tabModel({"song_title": title, "artist": artist, tabHtml, tabUrl});
         const savedTab = await tabToAdd.save()
         return savedTab;
     } catch(error) {
