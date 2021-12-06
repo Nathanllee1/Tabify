@@ -64,5 +64,8 @@
   },
   "jest": {
     "testEnvironment": "./test/custom-test-env.js"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
