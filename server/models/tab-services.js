@@ -13,26 +13,25 @@ function setConnection(newConn) {
 
 function getConnection() {
     if (!conn) {
-        if (process.argv.includes("--prod")) {
-            conn = mongoose.createConnection(
-                "mongodb+srv://" +
-                process.env.MONGO_USER +
-                ":" +
-                process.env.MONGO_PWD +
-                "myFirstDatabase.tnew1.mongodb.net/" +
-                process.env.MONGO_DB +
-                "?retryWrites=true&w=majority",
-            {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-            }
-        );
-        } else {
-            conn = mongoose.createConnection("mongodb://localhost:27017/tabs", {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-            });
-        }
+        conn = mongoose.createConnection(
+            "mongodb+srv://" +
+            process.env.MONGO_USER +
+            ":" +
+            process.env.MONGO_PWD +
+            "@cluster0.tnew1.mongodb.net/" +
+            process.env.MONGO_DB +
+            "?retryWrites=true&w=majority",
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log("mongodb+srv://" +
+        process.env.MONGO_USER +
+        ":" +
+        process.env.MONGO_PWD +
+        "@cluster0.tnew1.mongodb.net/" +
+        process.env.MONGO_DB +
+        "?retryWrites=true&w=majority");
     }
     return conn;
 }

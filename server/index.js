@@ -93,6 +93,7 @@ app.get("/api/gettab", async (req, res) => {
   // if tab is in database, return tab
 
   if (tab.length !== 0) {
+    console.log("Tab found in database.");
     tab = tab[0];
     res.json(
       {
@@ -101,12 +102,15 @@ app.get("/api/gettab", async (req, res) => {
       });
   }
   // if not, fetch from scraper
-  else {
+  else try {
+    console.log("Tab not in database. Requesting from scraper...")
     request.get(`https://tabify-scraper.herokuapp.com/gettab?artist_name=${encodeURIComponent(artist)}&song_name=${encodeURIComponent(name)}`, function (error, response, body) {
       let tabHtml = JSON.parse(body);
       res.json(tabHtml);
       tabServices.addTab(name, artist, tabHtml.TAB, tabHtml.URL);
     });
+  } catch (err) {
+    console.log("No tab on UltimateGuitar. Yet :)");
   }
   
 });
