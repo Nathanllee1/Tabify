@@ -1,4 +1,5 @@
 # Tabify
+Try it yourself! https://tabify-app.herokuapp.com/
 [![Node.js CI](https://github.com/Nathanllee1/Tabify/actions/workflows/node.js.yml/badge.svg)](https://github.com/Nathanllee1/Tabify/actions/workflows/node.js.yml)
 
 ## Project Description:
