@@ -117,8 +117,10 @@ app.get("/api/gettab", async (req, res) => {
 
 // TODO: /tabs endpoint to return all tabs in database (for dev)
 
-app.listen(process.env.PORT || port, () => {
+/*app.listen(process.env.PORT || port, () => {
   console.log("REST API is listening. on", port);
-});
+});*/
+
 
 app.use(express.static(path.join(__dirname, "../build")));
+module.exports = app
