@@ -56,6 +56,9 @@ const useStyles = makeStyles({
     marginBottom: "20px",
     marginTop: "1px",
   },
+  player_button : {
+    cursor: "pointer"
+  }
 
 });
 
@@ -96,7 +99,7 @@ function WebPlayback(props) {
       set_steady_track(current_track);
 
       console.log("Switching track to", steady_track);
-      
+
     }
   }, [current_track]);
 
@@ -158,8 +161,8 @@ function WebPlayback(props) {
     var interval = setInterval(() => {
       if (is_active && !is_paused) {
         if (autoScroll) {
-          console.log(tabRef.current.offsetHeight);
-          console.log((position / currentDuration) * tabRef.current.offsetHeight);
+          // console.log(tabRef.current.offsetHeight);
+          // console.log((position / currentDuration) * tabRef.current.offsetHeight);
           containerRef.current.scrollTo({
             top:
               (position / currentDuration) * tabRef.current.offsetHeight,
@@ -222,24 +225,29 @@ function WebPlayback(props) {
             </h3>
             <br />
             <SkipPreviousIcon
+              className={classes.player_button}
               onClick={() => {
+                console.log("Skip previous")
                 player.previousTrack();
               }}
             />
             {is_paused ? (
               <PlayCircleFilledIcon
+                className={classes.player_button}
                 onClick={() => {
                   player.togglePlay();
                 }}
               />
             ) : (
               <PauseCircleFilledIcon
+                className={classes.player_button}
                 onClick={() => {
                   player.togglePlay();
                 }}
               />
             )}
             <SkipNextIcon
+              className={classes.player_button}
               onClick={() => {
                 player.nextTrack();
               }}

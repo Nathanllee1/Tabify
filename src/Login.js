@@ -45,6 +45,7 @@ const useStyles = makeStyles({
     borderRadius: "15px",
     alignSelf: "flex-start",
     width: "40%",
+    maxWidth: "540px",
     backgroundColor: "white",
     position: "sticky",
     minWidth: "350px",
@@ -58,7 +59,7 @@ function Login() {
     <div className={classes.login}>
       <div className={classes.login_container}>
         <h1>Tabify</h1>
-        <a href="/auth/login">
+        <a href="/api/login">
           <img src="/Spotify_Icon_RGB_White.png" />
           LOGIN WITH SPOTIFY
         </a>
