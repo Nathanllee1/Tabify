@@ -56,7 +56,7 @@ const useStyles = makeStyles({
     marginBottom: "20px",
     marginTop: "1px",
   },
-  player_button : {
+  player_button: {
     cursor: "pointer"
   }
 
@@ -224,13 +224,16 @@ function WebPlayback(props) {
               {current_track.artists[0].name}
             </h3>
             <br />
-            <SkipPreviousIcon
-              className={classes.player_button}
-              onClick={() => {
-                console.log("Skip previous")
-                player.previousTrack();
-              }}
-            />
+            <div onClick={() => {
+              console.log("Skip previous")
+              player.previousTrack();
+            }}>
+              <SkipPreviousIcon
+                className={classes.player_button}
+
+              />
+            </div>
+
             {is_paused ? (
               <PlayCircleFilledIcon
                 className={classes.player_button}
