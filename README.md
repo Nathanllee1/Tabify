@@ -1,5 +1,8 @@
 # Tabify
-Try it yourself! https://tabify-app.herokuapp.com/
+
+# This project has been deprecated!
+Check out V2 at https://tabify.app and the code at https://github.com/Nathanllee1/TabifyV2
+
 [![Node.js CI](https://github.com/Nathanllee1/Tabify/actions/workflows/node.js.yml/badge.svg)](https://github.com/Nathanllee1/Tabify/actions/workflows/node.js.yml)
 
 ## Project Description:
